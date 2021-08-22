@@ -1,0 +1,22 @@
+header{
+    background-color: $main_color;
+    height: 60px;
+    line-height: 60px;
+    display: flex;
+
+    .logo{
+        height: 40px;
+        width: 50px;
+        background-color: #eee;
+    }
+    a{
+        color: #fff;
+    }
+    .nav{
+        display:flex;
+        justify-content: center;
+    }
+    li{
+        margin: 0px  20px;
+    }
+}
