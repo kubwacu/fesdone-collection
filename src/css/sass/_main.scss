@@ -39,6 +39,18 @@ table{
             color: $second_color
         }
     }
+    .product_image{
+        background-color: $black_color;
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        margin: 10px auto;
+    }
+}
+tbody{
+    tr{
+        border-bottom: 1px solid #ccc;
+    }
 }
 
 main{
