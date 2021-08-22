@@ -1,8 +1,10 @@
 header{
     background-color: $main_color;
     height: 60px;
-    line-height: 60px;
     display: flex;
+    justify-content: space-between;
+    padding: 0px $page_margin;
+    align-items: center;
 
     .logo{
         height: 40px;
