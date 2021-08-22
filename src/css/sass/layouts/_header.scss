@@ -13,6 +13,11 @@ header{
     }
     a{
         color: #fff;
+        transition: 0.3s all;
+
+        &:hover{
+            color: $second_color;
+        }
     }
     .nav{
         display:flex;
@@ -20,5 +25,21 @@ header{
     }
     li{
         margin: 0px  20px;
+    }
+    .actions{
+        i{
+            font-size: 25px;
+        }
+        .message_counter{
+            background-color: #d50000;
+            color: #fff;
+            padding: 3px 5px;
+            border-radius: 50%;
+            font-size: 12px;
+            font-weight: 800;
+            position: relative;
+            left: -10px;
+            top: 5px;
+        }
     }
 }
