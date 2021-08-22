@@ -1,0 +1,40 @@
+@import 'constants';
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing: border-box;
+}
+a{
+    text-decoration: none;
+}
+li{
+    list-style: none;
+}
+img{
+    width: 100%;
+    height: 100%;
+}
+
+header{
+    background-color: $main_color;
+    height: 60px;
+    line-height: 60px;
+    display: flex;
+
+    .logo{
+        height: 40px;
+        width: 50px;
+        background-color: #eee;
+    }
+    a{
+        color: #fff;
+    }
+    .nav{
+        display:flex;
+        justify-content: center;
+    }
+    li{
+        margin: 0px  20px;
+    }
+}
