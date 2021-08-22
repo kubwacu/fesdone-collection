@@ -21,6 +21,8 @@
 `git push origin [branch] -v`: upload changes to github
 `git add .`: prepare all changes to be saved
 `git commit -m "[message]"`: save changes
+`git pull --all -v`: sync code source
+
 
 # alert
 - create a folder name : `temp`
