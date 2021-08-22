@@ -13,13 +13,7 @@
     - live server
     - live sass compiler
     - material icon theme
-
-# actions
-- create account on github
-- linked git and github
-- contact huzaifa to add me to the repository
-- clone the project
--  add remote: `git remote add origin [links]`
+    - prettier
 
 # some git commands
 `git clone [links]`: download in local
@@ -27,4 +21,8 @@
 `git push origin [branch] -v`: upload changes to github
 `git add .`: prepare all changes to be saved
 `git commit -m "[message]"`: save changes
+
+# alert
+- create a folder name : `temp`
+- copy into fontawesome offline folder named `libraries`
 
