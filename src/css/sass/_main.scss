@@ -55,7 +55,15 @@ tbody{
 }
 
 main{
-    margin-top: 50px;
+    
+    >.header{
+        margin-top: 50px;
+        text-align: center;
+        text-transform: uppercase;
+        font-weight: lighter;
+        font-size: 18px;
+        color: $black_color;
+    }
 
     .content{
         background-color: #fff;
