@@ -1,0 +1,21 @@
+@import 'sass/main';
+
+table{
+    text-align: left;
+
+    .image__container{
+        width: 100px;
+    }
+
+    .image{
+        background-color: #fff;
+        margin: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    i{
+        font-size: 40px;
+        color: $black_color;
+    }
+}
