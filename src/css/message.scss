@@ -1,0 +1,19 @@
+@import 'sass/main';
+
+.profile{
+    height: 50px;
+        width: 50px;
+        background-color: #eee;
+        border-radius: 50%;
+}
+p{
+    font-family: 'Open Sans';
+    color: #fff;
+    position: relative;
+    right: 10px;
+}
+.close{
+    i{
+        font-size: 20px;
+    }
+}
