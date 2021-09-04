@@ -76,3 +76,24 @@ main{
         }
     }
 }
+
+.button_section{
+    padding: 20px $page_margin;
+    text-align: right;
+
+    .button{
+        background-color: $main_color;
+        color: #fff;
+        transition: 0.3s all;
+        padding: 10px 20px;
+        border-radius: 5px;
+        border: 1px solid $main_color;
+        font-size: 14px;
+
+        &:hover{
+            background-color: #fff;
+            color: $main_color;
+        }
+    }
+    
+}

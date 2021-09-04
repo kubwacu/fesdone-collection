@@ -1,0 +1,15 @@
+@import 'sass/main';
+
+.action{
+    a{
+        border-bottom: none;
+        padding: 0px 20px
+    }
+
+    &--edit, &--edit:hover{
+        color: #1565c0;
+    }
+    &--delete, &--delete:hover{
+        color: #d50000;
+    }
+}
