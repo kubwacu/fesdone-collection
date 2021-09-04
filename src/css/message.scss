@@ -1,19 +1,89 @@
 @import 'sass/main';
 
-.profile{
-    height: 50px;
-        width: 50px;
-        background-color: #eee;
-        border-radius: 50%;
+.header{
+    padding: 10px 40px;
+    display: flex;
+    align-items: center;
+
+    a, h1{
+        color: #fff;
+        display: block;
+        
+    }
+    a:hover{
+        color: $second_color
+    }
+
+    h1{
+        font-size: 20px;
+        margin-left: 20px;
+    }
 }
-p{
-    font-family: 'Open Sans';
-    color: #fff;
-    position: relative;
-    right: 10px;
+.discussions{
+    padding: 10px 40px;
+    height: 500px;
+    overflow: auto;
+    margin-bottom: 10px;
+
+    li{
+        span{
+            display: block;
+            border-radius: 20px;
+            background-color: #eee;
+            padding: 10px;
+            color: $black_color;
+            margin-bottom: 5px;
+            word-wrap: break-word;
+            width: fit-content;
+        }
+        
+    }
+    .send{
+        display: flex;
+        justify-content: flex-end;
+
+        span{
+            display: block;
+            background-color: $main_color;
+            color: #fff;
+        }
+
+    }
 }
-.close{
+.write_message{
+    padding: 10px 40px;
+    background-color: #eee;
+    display: flex;
+    justify-content: center;
+    
+    button{
+        border: none;
+        background: none;
+        cursor: pointer;
+
+        &:hover>i{
+            color: $second_color;
+        }
+    }
     i{
         font-size: 20px;
+        color: $main_color;
+        transition: 0.3s all;
+    }
+    textarea{
+        resize: none;
+        height: 40px;
+        padding: 10px;
+        border-radius: 10px;
+        border: 1px solid #ccc;
+        outline: none;
+        width: 90%;
+        height: 50px;
+        transition: 0.3s all;
+        margin: 0px 10px;
+
+        &:focus{
+            border-color: $main_color
+        }
     }
 }
