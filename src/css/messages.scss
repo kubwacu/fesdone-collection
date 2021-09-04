@@ -1,0 +1,20 @@
+@import 'sass/main';
+
+table{
+    text-align: left;
+
+    td{
+        padding: 20px;
+    }
+    span{
+        display: block;
+    }
+    .timer{
+        text-align: right;
+    }
+    .message{
+        &__content{
+            padding-left: 20px;
+        }
+    }
+}
