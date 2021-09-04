@@ -67,7 +67,7 @@
     }
     i{
         font-size: 20px;
-        color: $main_color;
+        color: $black_color;
         transition: 0.3s all;
     }
     textarea{
@@ -83,7 +83,7 @@
         margin: 0px 10px;
 
         &:focus{
-            border-color: $main_color
+            border-color: $black_color
         }
     }
 }
