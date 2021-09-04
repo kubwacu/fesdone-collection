@@ -8,6 +8,10 @@ header{background-color:#252541;height:60px;display:-webkit-box;display:-ms-flex
         border-radius: 50%;
         position: relative;
         right: 25%;
+        display:-ms-flexbox;
+        display:flex;
+        -webkit-box-pack:justify;
+        -ms-flex-pack:justify;
 }
 p{
     font-family:'Open Sans';
