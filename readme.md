@@ -18,11 +18,10 @@
 # some git commands
 `git clone [links]`: download in local
 `git pull origin [branch]`: download updates in a specific branch
-`git push origin [branch] -v`: upload changes to github
+`git push origin [branch]`: upload changes to github
 `git add .`: prepare all changes to be saved
 `git commit -m "[message]"`: save changes
-`git pull --all -v`: sync code source
-
+`git fetch` then  `git diff develop origin/develop`: ni commande zibiri ubanza ukagira iyo yambere hama iyo yindi, uyigira kandi isaba connexion uyigira ushak kuraba ko hariho ivyo nahinduye iyo atwavyo ntanakimwe ya afficha
 
 # alert
 - create a folder name : `temp`
