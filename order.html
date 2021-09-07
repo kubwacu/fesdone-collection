@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="src/css/orders.css">
+    <link rel="stylesheet" href="src/css/order.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;1,300;1,400;1,600;1,700;1,800&display=swap" rel="stylesheet">
@@ -15,6 +15,46 @@
 <body>
     <div id="app">
         <c-header></c-header>
+        <main>
+            <div class="header">
+                <h1>Order</h1>
+            </div>
+            <div class="content">
+                <table>
+                    <tr>
+                        <br>
+                        <td class="image__container"><div class="image"><i class="fas fa-image"></i></div>
+                            <td> 
+                            <span class="name"><strong>Test Product 3</strong></span>
+                             <span class="quantity__price">1 x 20 000 fbu = 20 000 fbu</span>
+                             </td>
+                        </td>
+                        <td>
+                            <span class="cathegory"><strong>Type:</strong>Boy</span>
+                            <span class="cathegory"><strong>Size:</strong>Prentium</span>
+                        </td>
+                        <br>
+
+                    </tr>
+                    <tr>
+                    <td>
+                        <br>
+                        <span class="customer"><strong>Name:</strong>Huzaifa Nimushimirimana</span>
+                        <span class="customer"><strong>Location:</strong>Bujumbura,Ngagara 9,Av 3 </span>
+                        <span class="customer"><strong>Phone:</strong>+257 71775083</span>
+                        <br><br>
+                        <td class="cordination"><div class="gps"><i class="fas fa-map-marker-alt"></i></div>
+
+                        </td>   
+                    
+                    
+                    <div class="btn">
+                        <button type="submit" class="button">Make pending product</button>
+                    </div>
+                </tr>
+                </table>
+            </div>
+        </main>
     </div>
 
     <script src="src/components/header.js"></script>
