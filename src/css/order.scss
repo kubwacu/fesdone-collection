@@ -1,0 +1,94 @@
+@import 'sass/main';
+
+h2{
+    color: $black_color;
+    margin-bottom: 10px;
+}
+.content{
+    padding: 50px;
+}
+.order{
+    display: flex;
+    justify-content: space-between;
+
+    &__cover{
+        width: 300px;
+        height: 300px;
+        background-color: #ccc;
+        margin-bottom: 10px;
+    }
+    &__product{
+        width: 300px;
+        text-align: center;
+        color: $black_color
+    }
+    &__details{
+        li{
+            margin-bottom: 5px;
+            width: 400px;
+            
+            &:last-child{
+                width: 500px;
+                margin-top: 50px;
+                font-size: 30px;
+                color: $black_color;
+
+                .detail_label{
+                    width: 40%;
+                }
+            }
+        }
+        span{
+            display: inline-block
+        }
+        .detail_label{
+            width: 30%;
+            text-align: left;
+        }
+        .detail{
+            width: 60%;
+            font-weight: bold;
+        }
+    }
+}
+.button_section{
+    text-align: center;
+}
+.customer{
+    border-top: 1px solid #ccc;
+    padding-top: 50px;
+    margin-top: 30px;
+    
+    &__content{
+        
+        display: flex;
+        justify-content: space-between;
+    }
+
+    &__location{
+        width: 50%;
+        background-color: #ccc;
+        height: 350px;
+    }
+    &__details{
+        width: 50%;
+        margin-right: 20px;
+
+        li{
+            background-color: $gray_color;
+            border: 1px solid $gray_color;
+            padding: 5px 10px;
+            display: flex;
+            justify-content: space-between;
+
+            span{
+                display: block;
+            }
+
+            &:nth-child(2n){
+                background-color: #fff;
+            }
+        }
+    }
+    
+}

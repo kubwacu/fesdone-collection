@@ -17,42 +17,46 @@
         <c-header></c-header>
         <main>
             <div class="header">
-                <h1>Order</h1>
+                <h1>Order number: 14</h1>
             </div>
             <div class="content">
-                <table>
-                    <tr>
-                        <br>
-                        <td class="image__container"><div class="image"><i class="fas fa-image"></i></div>
-                            <td> 
-                            <span class="name"><strong>Test Product 3</strong></span>
-                             <span class="quantity__price">1 x 20 000 fbu = 20 000 fbu</span>
-                             </td>
-                        </td>
-                        <td>
-                            <span class="cathegory"><strong>Type:</strong>Boy</span>
-                            <span class="cathegory"><strong>Size:</strong>Prentium</span>
-                        </td>
-                        <br>
-
-                    </tr>
-                    <tr>
-                    <td>
-                        <br>
-                        <span class="customer"><strong>Name:</strong>Huzaifa Nimushimirimana</span>
-                        <span class="customer"><strong>Location:</strong>Bujumbura,Ngagara 9,Av 3 </span>
-                        <span class="customer"><strong>Phone:</strong>+257 71775083</span>
-                        <br><br>
-                        <td class="cordination"><div class="gps"><i class="fas fa-map-marker-alt"></i></div>
-
-                        </td>   
-                    
-                    
-                    <div class="btn">
-                        <button type="submit" class="button">Make pending product</button>
+                <div class="order">
+                    <div class="order__main_info">
+                        <div class="order__cover"></div>
+                        <div class="order__product">
+                            <h2>T-shirt type yoko</h2>
+                        </div>
                     </div>
-                </tr>
-                </table>
+                    <ul class="order__details">
+                        <li><span class="detail_label">Order status</span><span class="detail">: <span class="badget">pending</span></span></li>
+                        <li><span class="detail_label">Color</span><span class="detail">: <span style="color: #1565c0">#1565c0</span> </span></li>
+                        <li><span class="detail_label">Size</span><span class="detail">: XXL</span></li>
+                        <br>
+                        <li><span class="detail_label">Orded at</span><span class="detail">: 10/09/2021 18:21</span></li>
+                        <li><span class="detail_label">Expect at</span><span class="detail">: 15/09/2021 15:00</span></li>
+                        <li><span class="detail_label">Price</span><span class="detail">: 25 000 FBU</span></li>
+                        <li><span class="detail_label">Quantity</span><span class="detail">:  1 t-shirt</span></li>
+                        <li><span class="detail_label">Total Amount</span><span class="detail">:  25 000 FBU</span></li>
+                    </ul>
+                </div>
+                <div class="button_section"><button class="button">Pend the order</button></div>
+                <div class="customer">
+                    <h2>Customer information</h2>
+                    <div class="customer__content">
+                        <ul class="customer__details">
+                            <li><span>Nom</span><span>Huzaifa Nimushimirimana</span></li>
+                            <li><span>Téléphone</span><span>+257 61 61 84 65</span></li>
+                            <li><span>Pays</span><span>Burundi</span></li>
+                            <li><span>Province</span><span>Bujumbura</span></li>
+                            <li><span>Commune</span><span>Ntahangwa</span></li>
+                            <li><span>Zone</span><span>Ngagara</span></li>
+                            <li><span>Quartier</span><span>Ngagara Q9</span></li>
+                            <li><span>Avenue</span><span>Avenue 3, numero 20</span></li>
+
+                        </ul>
+                        <div class="customer__location"></div>
+                    </div>
+                </div>
             </div>
         </main>
     </div>

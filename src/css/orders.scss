@@ -1,17 +1,1 @@
 @import 'sass/main';
-
-.badget{
-    background-color: #d50000;
-    color: #fff;
-    padding: 3px 10px;
-    border-radius: 20px;
-    font-weight: bold;
-
-    &__done{
-        background-color: green;
-    }
-
-    &__inprocess{
-        background-color: #1565c0;
-    }
-}
