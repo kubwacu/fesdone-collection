@@ -20,17 +20,24 @@
             <h1>Add and Modify</h1>
         </div>
         <div class="content">
-            <div class="add_image"><i class="fas fa-image"></i></div>
-            <div class="banks">
-                <span><strong>Name</strong></span>
-                <input class="name" type="text"/>
-                <span><strong>Price</strong></span>
-                <input class="name" type="text"/>
-                <span><strong>Details</strong></span>
-                <textarea class="informaition"></textarea>
+            <div class="product">
+                <div class="product__cover"></div>
+                <i class="fas fa-image product__cover_btn"></i>
             </div>
-            <div class="button_section"><button class="button">Save</button></div>
-            <div class="btn_section"><button class="btn">Cancel</button></div>
+            <div class="form">
+                <label for="">Product title</label>
+                <input class="name" type="text" placeholder="Entrer the product title" maxlength="50"/>
+
+                <label for="">Price of the product</label>
+                <input class="name" type="text" placeholder="How much this product cost?" maxlength="11"/>
+
+                <label for="">Description of the product</label>
+                <textarea class="information" placeholder="Entrer more detail about the product"></textarea>
+            </div>
+            <div class="button_section">
+                <button class="button">Save</button>
+                <button class="button button--delete">Cancel</button>
+            </div>
         </div>
     </div>
 </main>
