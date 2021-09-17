@@ -93,6 +93,14 @@ main{
             background-color: #fff;
             color: $main_color;
         }
+        &--delete{
+            background-color: #d50000;
+            border-color: #d50000;
+
+            &:hover{
+                color: #d50000;
+            }
+        }
     }
     
 }
