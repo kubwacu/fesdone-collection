@@ -2,7 +2,7 @@ Vue.component('c-header', {
     template: `
     <header>
         <div class="logo">
-
+         <img src="image/F.png">
         </div>
         <ul class="nav">
             <li><a href="orders.html">Orders</a></li>
