@@ -167,6 +167,30 @@
 
             return $model_fields;
         }
+        
+        static public function get_model(string $model_class): array{
+            $model = ['class' => $model_class, 'table' => self::get_table_name($model_class)];
+            $model_vars = get_class_vars($model_class);
+            
+            try{
+                $model_params = $model_vars['params'];
+            }
+            catch(ErrorException $e){
+                throw new ModelizationException("model '".$model_class."' doesn't have parameters.");
+            }
+
+            if(is_subclass_of($model_class, 'Akana\Models\AkanaUser')){
+                $model_params += $model_vars['akana_user_model_params'] + $model_params;
+            }
+
+            $model_fields = self::get_model_fields(Utils::get_keys($model_vars));
+            $model += ['fields' => $model_fields]; 
+            $model += ['params' => $model_params]; 
+  
+            self::validate_model($model);
+
+            return $model;
+        }
 
         static public function get_table_name(String $class): String{
             $t = explode('\\', $class);
@@ -177,7 +201,7 @@
             // remove pk field because it has been added automatically
             unset($model['fields'][count($model['fields'])-1]);
 
-            $valid_types = ['int', 'str', 'datetime'];
+            $valid_types = ['int', 'str', 'datetime', 'email'];
             
             // every model field must have params
             foreach($model['fields'] as $field){
@@ -186,24 +210,25 @@
                     throw new ModelizationException($message);
                 }
             }
-
+            
+            // validate type of fields
             foreach($model['params'] as $field => $params){
                 // type parameter
                 if(!key_exists('type', $params)){
                     $message = "in model '".$model['class']."' field '".$field."' doesn't have 'type' parameter.";
                     throw new ModelizationException($message);
                 }
-                else{
-                    if(!is_string($params['type'])){
-                        $message = "in model '".$model['class']."' at field '".$field."' parameter 'type' must be a string.";
-                        throw new ModelizationException($message);
-                    }
-                    else{
-                        if(!in_array($params['type'], $valid_types)){
-                            $message = "in model '".$model['class']."' type '".$params['type']."' of field '".$field."' is not valid, use one of those: ".json_encode($valid_types);
-                            throw new ModelizationException($message);  
-                        }
-                    }
+                
+                // type parameter must be a string
+                if(!is_string($params['type'])){
+                    $message = "in model '".$model['class']."' at field '".$field."' parameter 'type' must be a string.";
+                    throw new ModelizationException($message);
+                }
+                
+                // a type must be valid
+                if(!in_array($params['type'], $valid_types)){
+                    $message = "in model '".$model['class']."' type '".$params['type']."' of field '".$field."' is not valid, use one of those: ".json_encode($valid_types);
+                        throw new ModelizationException($message);  
                 }
 
                 // type = datetime
@@ -246,12 +271,19 @@
                 }
 
                 // default parameter
-                if(!isset($params['default']))
-                    $model['params'][$field]['default'] = NULL;
-                    
+                if(!isset($params['default'])) $model['params'][$field]['default'] = NULL; 
                 else{
-                    if($params['default'] == NULL){
-                        $message = "in model '".$model['class']."' at field '".$field."' parameter 'default' can not be null.";
+                    if($params['default'] == null){
+                        $message = "in model '".$model['class']."' at field '".$field."' parameter 'default' can't be null.";
+                        throw new ModelizationException($message);
+                    }
+                }
+
+                // unique parameter
+                if(!isset($params['unique'])) $model['params'][$field]['unique'] = false;
+                else{
+                    if(!is_bool($params['unique'])){
+                        $message = "in model '".$model['class']."' at field '".$field."' parameter 'unique' must be a boolean.";
                         throw new ModelizationException($message);
                     }
                 }
@@ -261,31 +293,8 @@
             array_unshift($model['fields'], 'pk');
         }
 
-        static public function get_model(string $model_class): array{
-            $model = ['class' => $model_class, 'table' => self::get_table_name($model_class)];
-            $model_vars = get_class_vars($model_class);
-            
-            try{
-                $model_params = $model_vars['params'];
-            }
-            catch(ErrorException $e){
-                throw new ModelizationException("model '".$model_class."' doesn't have parameters.");
-            }
-
-            if(is_subclass_of($model_class, 'Akana\Models\AkanaUser')){
-                $model_params += $model_vars['akana_user_model_params'] + $model_params;
-            }
-            
-
-            $model_fields = self::get_model_fields(Utils::get_keys($model_vars));
-            $model += ['fields' => $model_fields]; 
-            $model += ['params' => $model_params]; 
-  
-            self::validate_model($model);
-
-            return $model;
-        }
-
+        // check if given data respect the syntax specify in the model
+        // throw serializerException if there is an error
         static public function data_validation(array &$model, array &$data): void{
             $serializer_errors = [];
 
@@ -295,12 +304,23 @@
                 $type = $model['params'][$field]['type'];
                 $nullable = $model['params'][$field]['nullable'];
                 $default = $model['params'][$field]['default'];
+                $unique = $model['params'][$field]['unique'];
 
                 try{
                     $value = $data[$field];
                 }
                 catch(ErrorException $e){
                     $value = NULL;
+                }
+
+                if($unique){
+                    $user = call_user_func_array(array($model['class'], 'get'), array([$field => $value]));
+                    if($user != null){
+                        if(!key_exists($field, $serializer_errors))
+                            $serializer_errors[$field] = [];
+                    
+                        array_push($serializer_errors[$field], "'".$value."' already exist.");
+                    }
                 }
 
                 if(!$nullable && $value == NULL && $default == NULL){

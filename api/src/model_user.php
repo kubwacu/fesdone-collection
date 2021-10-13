@@ -8,7 +8,7 @@
         public $password;
 
         static public $akana_user_model_params = [
-            'username' => ['type'=>'str', 'min_length'=> 3, 'max_length'=>50],
+            'username' => ['type'=>'str', 'min_length'=> 3, 'max_length'=>50, 'unique'=>true],
             'password' => ['type'=> 'str', 'min_length'=> 8, 'max_length'=>50],
         ];
     }

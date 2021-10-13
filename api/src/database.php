@@ -34,6 +34,7 @@
             }
         }
 
+        // prepare data for insert query
         static public function insert_query_data(array $data, array $params): array{
             $query_data = [];
             $columns = NULL;
@@ -43,11 +44,12 @@
             foreach($data as $k => $v){
                 if($v != NULL){
 
-                    if($params[$k]['type'] == "str") $v = '"'.$v.'"';
+                    if($params[$k]['type'] == "str" || $params[$k]['type'] == "email") 
+                        $v = '"'.$v.'"';
 
-                    if($counter == 0){$columns = $k; $values = $v;}
+                    if($counter == 0) {$columns = $k; $values = $v;}
                     
-                    else{$columns .= ",".$k; $values .= ",".$v;}
+                    else {$columns .= ",".$k; $values .= ",".$v;}
                     
                 }
                 $counter++;
@@ -57,15 +59,16 @@
 
             return $query_data;
         }
+
+        // prepare data for update query
         static public function update_query_data(array $data, array $params): string{
             $query_data = NULL;
             $counter = 0;
             
             foreach($data as $k => $v){
                 if($v != NULL){
-                    if($params[$k]['type'] == "str"){
+                    if($params[$k]['type'] == "str" || $params[$k]['type'] == "email")
                         $v = '"'.$v.'"';
-                    }
 
                     if($counter == 0){
                         $query_data = $k."=".$v;
