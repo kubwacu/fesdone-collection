@@ -1,4 +1,5 @@
 <?php
     define('ENDPOINTS', [
-       // create your endpoints here
+        '/' => 'UsersController',
+        '/(user_id:int)/' => 'ManageUserController',
     ]);

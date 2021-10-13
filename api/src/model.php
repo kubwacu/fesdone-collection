@@ -12,6 +12,7 @@
     use Akana\Database;
     use Akana\Exceptions\ModelizationException;
     use Akana\Exceptions\SerializerException;
+    use Akana\Models\AkanaUser;
     use Akana\Utils;
     use ErrorException;
 
@@ -149,6 +150,10 @@
 
             return $database_con->empty($model['table']);
         }  
+
+        static public function authenticate(array $data){
+            // check if fields password and username was provided
+        }
     }
 
     abstract class ModelUtils{
@@ -156,7 +161,7 @@
             $model_fields = [];
 
             foreach($model_vars as $var){
-                if($var != 'params')
+                if($var != 'params' && $var != 'akana_user_model_params')
                     array_push($model_fields, $var);  
             }
 
@@ -259,13 +264,18 @@
         static public function get_model(string $model_class): array{
             $model = ['class' => $model_class, 'table' => self::get_table_name($model_class)];
             $model_vars = get_class_vars($model_class);
-
+            
             try{
                 $model_params = $model_vars['params'];
             }
             catch(ErrorException $e){
                 throw new ModelizationException("model '".$model_class."' doesn't have parameters.");
             }
+
+            if(is_subclass_of($model_class, 'Akana\Models\AkanaUser')){
+                $model_params += $model_vars['akana_user_model_params'] + $model_params;
+            }
+            
 
             $model_fields = self::get_model_fields(Utils::get_keys($model_vars));
             $model += ['fields' => $model_fields]; 

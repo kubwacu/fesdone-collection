@@ -8,6 +8,7 @@
     );
     define('APP_RESOURCES', [
         'users',
+        'login',
         'products',
         'orders',
         'messages'

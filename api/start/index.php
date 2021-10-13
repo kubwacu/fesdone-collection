@@ -13,6 +13,7 @@
     require '../src/database.php';
     require '../src/exceptions.php';
     require '../src/model.php';
+    require '../src/model_user.php';
     require '../src/serializer.php';
     require '../src/response.php';
     require '../src/main.php';

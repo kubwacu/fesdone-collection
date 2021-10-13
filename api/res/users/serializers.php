@@ -3,4 +3,8 @@
 
     use Akana\Serializer;
 
-    // create your serializers here
+    class UserSerializer extends Serializer{
+        public static $rules = [
+            'fields' => 'all'
+        ];
+    }
