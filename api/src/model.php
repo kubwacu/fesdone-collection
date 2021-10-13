@@ -312,7 +312,8 @@
                 catch(ErrorException $e){
                     $value = NULL;
                 }
-
+                
+                // check if a value doesn't exist already in the table
                 if($unique){
                     $user = call_user_func_array(array($model['class'], 'get'), array([$field => $value]));
                     if($user != null){
@@ -323,6 +324,15 @@
                     }
                 }
 
+                // check type
+                if($type == "email" && !Validator::email($value)){
+                    if(!key_exists($field, $serializer_errors))
+                        $serializer_errors[$field] = [];
+                    
+                    array_push($serializer_errors[$field], "'".$value."' is not valid email.");
+                }
+                
+                // check if non-nullable field are null
                 if(!$nullable && $value == NULL && $default == NULL){
                     if(!key_exists($field, $serializer_errors))
                         $serializer_errors[$field] = [];

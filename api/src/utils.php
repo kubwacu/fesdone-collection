@@ -129,7 +129,7 @@
             return [];
         }
         static function is_dynamic(string $endpoint): bool{
-            return (preg_match('#\([a-zA-Z0-9_]+:int\)|\([a-zA-Z0-9_]+:str\)+#', $endpoint))? true: false;
+            return preg_match('#\([a-zA-Z0-9_]+:int\)|\([a-zA-Z0-9_]+:str\)+#', $endpoint);
         }
         static function get_args($native_endpoint, $pattern_matches): array{
             $pattern = "#\([a-zA-Z0-9_]+:#";
@@ -157,5 +157,11 @@
             $regex = preg_replace('#\(([a-zA-Z0-9_]+):str\)#', '(?<$1>[a-zA-Z0-9_-]+)', $regex);
 
             return $regex;
+        }
+    }
+
+    abstract class Validator{
+        static public function email($email): bool{
+            return preg_match('#^[a-zA-Z0-9_\-]+@[a-zA-Z0-9_\-]+\.[a-zA-Z]{3}$#', $email);;
         }
     }
