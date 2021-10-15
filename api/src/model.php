@@ -39,13 +39,14 @@
                 
 
                 if($value != NULL)
-                    if($model['params'][$field]['type'] == "int") 
+                    if($model['params'][$field]['type'] == "int" || (is_subclass_of($model['class'], 'Akana\Models\AkanaUser') && $field == 'token')) 
                         $value = intval($value);
 
                 $this->$field = $value;      
             }  
         }
     
+        // save data in REQUEST['data']
         public function save(): void{
             $data = REQUEST['data'];
             $model = ModelUtils::get_model(get_called_class());
@@ -61,6 +62,7 @@
             $pk = $database_con->save($model['table'], Database::prepare_insertion($data, $model, $token));
             
             $data =  $database_con->get($model['table'], "pk", $pk);
+            
             call_user_func_array([$this, 'hydrate_object'], [$model, $data]);            
         }
 

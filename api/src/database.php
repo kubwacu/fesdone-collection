@@ -111,7 +111,7 @@
             }
         }
 
-        // get one object in database using id or other column
+        // get one object in database using pk or other column
         public function get($table, $col, $val){
             try{
                 $query = 'SELECT * FROM '.$table.' WHERE '.$col.'=:val';
