@@ -35,16 +35,27 @@
         }
 
         // prepare data for insert query
-        static public function insert_query_data(array $data, array $params): array{
+        static public function prepare_insertion(array $data, array $model, $token): array{
             $query_data = [];
             $columns = NULL;
             $values = NULL;
             $counter = 0;
             
+            if($token != null){
+                $token_table = $model['table'].'__token';
+                $database_con = new Database();
+                $database_con = $database_con->get_database_con();
+                
+                $database_con->exec("INSERT INTO ".$token_table."(token, update_at) VALUES('".$token."', NOW())");
+                $token_id = $database_con->lastInsertId();
+
+                $data += ['token' => $token_id];
+            }
+      
             foreach($data as $k => $v){
                 if($v != NULL){
 
-                    if($params[$k]['type'] == "str" || $params[$k]['type'] == "email") 
+                    if($model['params'][$k]['type'] == "str" || $model['params'][$k]['type'] == "email") 
                         $v = '"'.$v.'"';
 
                     if($counter == 0) {$columns = $k; $values = $v;}
@@ -61,7 +72,7 @@
         }
 
         // prepare data for update query
-        static public function update_query_data(array $data, array $params): string{
+        static public function prepare_update(array $data, array $params): string{
             $query_data = NULL;
             $counter = 0;
             

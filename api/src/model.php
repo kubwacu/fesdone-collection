@@ -12,12 +12,15 @@
     use Akana\Database;
     use Akana\Exceptions\ModelizationException;
     use Akana\Exceptions\SerializerException;
-    use Akana\Models\AkanaUser;
     use Akana\Utils;
     use ErrorException;
 
     abstract class Model{
         public $pk;
+
+        public const ONE2ONE = 1;
+        public const ONE2MANY = 2;
+        public const MANY2MANY = 3;
 
         private function hydrate_object(array $model, array $data){     
             foreach($model['fields'] as $field){
@@ -46,11 +49,16 @@
         public function save(): void{
             $data = REQUEST['data'];
             $model = ModelUtils::get_model(get_called_class());
+            $token = null;
 
             ModelUtils::data_validation($model, $data);
 
+            if(is_subclass_of($model['class'], 'Akana\Models\AkanaUser')){
+                $token = Utils::generate_token($model['table']);
+            }
+
             $database_con = new DataBase();
-            $pk = $database_con->save($model['table'], Database::insert_query_data($data, $model['params']));
+            $pk = $database_con->save($model['table'], Database::prepare_insertion($data, $model, $token));
             
             $data =  $database_con->get($model['table'], "pk", $pk);
             call_user_func_array([$this, 'hydrate_object'], [$model, $data]);            
@@ -66,7 +74,7 @@
             }
             
             $database_con = new DataBase();
-            $database_con->update($model['table'], $this->pk, Database::update_query_data($data, $model['params']));
+            $database_con->update($model['table'], $this->pk, Database::prepare_update($data, $model['params']));
             
             $data =  $database_con->get($model['table'], "pk", $this->pk);
             call_user_func_array([$this, 'hydrate_object'], [$model, $data]);
@@ -154,6 +162,10 @@
         static public function authenticate(array $data){
             // check if fields password and username was provided
         }
+
+        static public function model(): array{
+            return ModelUtils::get_model(get_called_class());
+        }
     }
 
     abstract class ModelUtils{
@@ -227,8 +239,20 @@
                 
                 // a type must be valid
                 if(!in_array($params['type'], $valid_types)){
-                    $message = "in model '".$model['class']."' type '".$params['type']."' of field '".$field."' is not valid, use one of those: ".json_encode($valid_types);
-                        throw new ModelizationException($message);  
+                    // check if the type is not a relation
+                    if(strpos($params['type'], '\\')){
+                        try{
+                            new $params['type']();
+                        } catch(\Error $e){
+                            $message = " class '".$params['type']."' used for relation in model '".$model['class']."' at field '".$field."' not found.";
+                            throw new ModelizationException($message);  
+                        }  
+                    }
+                    // type is not a relation
+                    else{                
+                        $message = "in model '".$model['class']."' type '".$params['type']."' of field '".$field."' is not valid, use one of those: ".json_encode($valid_types);
+                            throw new ModelizationException($message);  
+                    }
                 }
 
                 // type = datetime
@@ -334,10 +358,12 @@
                 
                 // check if non-nullable field are null
                 if(!$nullable && $value == NULL && $default == NULL){
-                    if(!key_exists($field, $serializer_errors))
-                        $serializer_errors[$field] = [];
-                    
-                    array_push($serializer_errors[$field], "can't be null.");
+                    if($field != 'token' || !is_subclass_of($model['class'], 'Akana\Models\AkanaUser')){
+                        if(!key_exists($field, $serializer_errors))
+                            $serializer_errors[$field] = [];
+                        
+                        array_push($serializer_errors[$field], "can't be null.");
+                    }
                 }
             }
 
