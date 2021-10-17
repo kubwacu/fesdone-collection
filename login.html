@@ -12,14 +12,21 @@
     <link rel="icon" href="src/images/logo.png">
     <script src="lib/vue.js"></script>
     <script src="src/js/manage_cookies.js"></script>
+    <script>
+        const tkn = ManageCookie.get_cookie('tkn');
+        if(tkn != null) window.location.replace("/orders.html"); 
+        let url = new URL(location.href);
+        const r = url.searchParams.get('r');
+        if(r != null) {var msg = "You must authenticate yourself."};
+    </script>
     <title>Login - Fesdone collection</title>
 </head>
 <body>
     <div id="app">
         <main>
             <div class="form">
-                <div class="form__errors">
-                    <p>Votre mot de passe est incorrect</p>
+                <div v-if="r != null" class="form__errors">
+                    <p>{{ msg }}</p>
                 </div>
                 <div class="form__content">
                     <h1>Log in</h1>
@@ -47,7 +54,11 @@
     <script src="src/components/header.js"></script>
     <script>
         const app = new Vue({
-            el: '#app'
+            el: '#app',
+            data: {
+                r: r,
+                msg: msg
+            }
         });
     </script>
 </body>
