@@ -11,6 +11,6 @@
         public $akana_user_model_params = [
             'username' => ['type'=>'str', 'min_length'=> 3, 'max_length'=>50, 'unique'=>true],
             'password' => ['type'=> 'str', 'min_length'=> 8, 'max_length'=>50],
-            'token' => ['type'=> 'Akana\Models\Token', 'unique'=>true, 'relation'=> Model::ONE2ONE],
+            'token' => ['type'=> Token::class, 'unique'=>true, 'relation'=> Model::ONE2ONE],
         ];
     }

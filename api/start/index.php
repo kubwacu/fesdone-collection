@@ -33,3 +33,4 @@
     catch (Exception $e) {
         include_once('../src/errors_manager.php');
     }
+ 

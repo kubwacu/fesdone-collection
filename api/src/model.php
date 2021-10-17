@@ -12,6 +12,7 @@
     use Akana\Database;
     use Akana\Exceptions\ModelizationException;
     use Akana\Exceptions\SerializerException;
+    use Akana\Models\AkanaUser;
     use Akana\Utils;
     use ErrorException;
 
@@ -39,7 +40,7 @@
                 
 
                 if($value != NULL)
-                    if($model['params'][$field]['type'] == "int" || (is_subclass_of($model['class'], 'Akana\Models\AkanaUser') && $field == 'token')) 
+                    if($model['params'][$field]['type'] == "int" || (is_subclass_of($model['class'], AkanaUser::class) && $field == 'token')) 
                         $value = intval($value);
 
                 $this->$field = $value;      
@@ -54,7 +55,7 @@
 
             ModelUtils::data_validation($model, $data);
 
-            if(is_subclass_of($model['class'], 'Akana\Models\AkanaUser')){
+            if(is_subclass_of($model['class'], AkanaUser::class)){
                 $token = Utils::generate_token($model['table']);
             }
 
@@ -193,7 +194,7 @@
                 throw new ModelizationException("model '".$model_class."' doesn't have parameters.");
             }
 
-            if(is_subclass_of($model_class, 'Akana\Models\AkanaUser')){
+            if(is_subclass_of($model_class, AkanaUser::class)){
                 $model_params += $model_vars['akana_user_model_params'] + $model_params;
             }
 
@@ -360,7 +361,7 @@
                 
                 // check if non-nullable field are null
                 if(!$nullable && $value == NULL && $default == NULL){
-                    if($field != 'token' || !is_subclass_of($model['class'], 'Akana\Models\AkanaUser')){
+                    if($field != 'token' || !is_subclass_of($model['class'], AkanaUser::class)){
                         if(!key_exists($field, $serializer_errors))
                             $serializer_errors[$field] = [];
                         
