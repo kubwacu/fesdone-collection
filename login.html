@@ -17,7 +17,7 @@
         if(tkn != null) window.location.replace("/orders.html"); 
         let url = new URL(location.href);
         const r = url.searchParams.get('r');
-        if(r != null) {var msg = "You must authenticate yourself."};
+        if(r != null && r == "0") {var msg = "You must authenticate yourself."};
     </script>
     <title>Login - Fesdone collection</title>
 </head>
@@ -25,7 +25,7 @@
     <div id="app">
         <main>
             <div class="form">
-                <div v-if="r != null" class="form__errors">
+                <div v-if="r != null && r == 0" class="form__errors">
                     <p>{{ msg }}</p>
                 </div>
                 <div class="form__content">
