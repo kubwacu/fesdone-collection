@@ -10,9 +10,11 @@
     namespace Akana;
 
     use Akana\Database;
+    use Akana\Exceptions\AkanaException;
     use Akana\Exceptions\ModelizationException;
     use Akana\Exceptions\SerializerException;
     use Akana\Models\AkanaUser;
+    use Akana\Models\Token;
     use Akana\Utils;
     use ErrorException;
 
@@ -90,8 +92,12 @@
             return $database_con->delete($model['table'], $this->pk);
         }
 
-        static public function get($value){
+        static public function get($value, string $table = null){
             $model = ModelUtils::get_model(get_called_class());
+
+            if($table != null) 
+                $model['table'] = $table;
+
             $message = "method 'get' of class 'Model' can receive one parameter and it can be array with length 1 or integer.";
 
             if(!is_array($value) && !is_numeric($value))
@@ -124,7 +130,7 @@
                     $col = 'pk';
         
             }
-
+         
             $data =  $database_con->get($model['table'], $col, $val);
 
             if($data){
@@ -155,6 +161,25 @@
             return $output_data;
         }
 
+        static public function filter(array $filters): array{
+            $output_data = [];
+            $model = ModelUtils::get_model(get_called_class());
+
+            $database_con = new DataBase();
+            $data =  $database_con->filter($model['table'], $filters);
+            
+            if(!empty($data)){
+                for($i=0; $i<count($data); $i++){
+                    $object = new $model['class']();
+                    call_user_func_array([$object, 'hydrate_object'], [$model, $data[$i]]);
+                    array_push($output_data, $object);
+                }
+            }
+
+            return $output_data;
+        }
+        
+
         static public function delete_all(): bool{
             $model = ModelUtils::get_model(get_called_class());
             $database_con = new DataBase();
@@ -162,12 +187,32 @@
             return $database_con->empty($model['table']);
         }  
 
-        static public function authenticate(array $data){
-            // check if fields password and username was provided
-        }
+        // method to authenticate user
+        static public function authenticate(){
+            $model = ModelUtils::get_model(get_called_class());
 
-        static public function model(): array{
-            return ModelUtils::get_model(get_called_class());
+            if(!is_subclass_of($model['class'], AkanaUser::class)){
+                $message = "class '".$model['class']."' can't use method 'authenticate' because it is not a subclass of '".AkanaUser::class."'.";
+                throw new ModelizationException($message);
+            }
+
+            if(!isset(REQUEST['data']['username']) || !isset(REQUEST['data']['password']))
+                throw new SerializerException("you must provide your username and password.");
+            
+            $filters = ['username'=>REQUEST['data']['username'], 'password'=>REQUEST['data']['password']];
+            $user = call_user_func_array([$model['class'], 'filter'], array($filters));
+
+            if(empty($user))
+                throw new SerializerException("your credintials are not correct.");
+            
+            if(count($user) > 1)
+                throw new AkanaException("there some duplicated accounts.");
+
+            $user = $user[0];
+            $token_class = $model['table'].'__token';
+            $token = call_user_func_array([Token::class, 'get'], [$user->token, $token_class]);
+
+            return $token->token;
         }
     }
 

@@ -94,6 +94,24 @@
             return $query_data;
         }
 
+        // prepare data for filter
+        static function prepare_filters(array $filters): string{
+            $filters_string = "";
+            $counter = 0;
+
+            foreach($filters as $k=>$v){
+                if($counter == 0){
+                    $filters_string .= (gettype($v) == "integer")? $k."=".$v : $k."='".$v."'";
+                }
+                else{
+                    $filters_string .= (gettype($v) == "integer")? " AND ".$k."=".$v : " AND ".$k."='".$v."'";
+                }
+                $counter++;
+            }
+
+            return $filters_string;
+        }
+
         public function save(string $table, array $query_data): int{
             try {
                 $query = 'INSERT INTO '.$table.'('.$query_data['columns'].') VALUES('.$query_data['values'].')';
@@ -119,8 +137,9 @@
 
                 $q = $this->_database_con->prepare($query);
                 $q->execute([':val'=> $val]);
+                $count = $q->rowCount();
                 
-                if($q->rowCount() > 0){
+                if($count == 1){
                     while($data = $q->fetch())
                         $output_data = $data;
                         
@@ -128,12 +147,16 @@
 
                     return $output_data;
                 }
+                else if($count > 1){
+                    throw new DatabaseException("many data for get method");
+                }
                 
             }
             catch(Exception $e){
                 throw new DatabaseException($e->getMessage());
             }
         }
+
         // get all objets in table
         public function get_all(string $table){
             try{
@@ -155,6 +178,28 @@
                 throw new DatabaseException($e->getMessage());
             }
         }
+
+        // get many objects with filters
+        public function filter(string $table, array $filters){
+            try{
+                $query = 'SELECT * FROM '.$table.' WHERE '.self::prepare_filters($filters);
+                $output_data = [];
+
+                $q = $this->_database_con->query($query);
+                
+                if($q->rowCount() > 0){
+                    while($data = $q->fetch())
+                        array_push($output_data, $data);
+                        
+                    $q->closeCursor();
+                }
+
+                return $output_data;
+            }
+            catch(Exception $e){
+                throw new DatabaseException($e->getMessage());
+            }
+        }   
 
         public function delete(string $table, int $pk): bool{
             try {

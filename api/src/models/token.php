@@ -5,7 +5,7 @@
 
     class Token extends Model{
         public $token;
-        public $last_update;
+        public $update_at;
 
         static public $params = [
             'token' => ['type'=> 'str', 'lenght'=>50, 'unique'=>true],
