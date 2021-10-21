@@ -37,7 +37,7 @@
             if(empty($request_data) && !empty($_POST))
                 $request_data = $_POST;  
 
-            return $request_data;
+            return ($request_data != null)? $request_data : [];
         }
 
         static function remove_char(string $word, $index=0): string{

@@ -4,7 +4,7 @@
 */
 
 class ManageCookie{
-    static set_cookie(name, value, days){
+    static set_cookie(name, value, days=30){
         let expiration_time = new Date();
     
         expiration_time.setTime(expiration_time.getTime() + (days*24*60*60*1000));

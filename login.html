@@ -25,28 +25,26 @@
     <div id="app">
         <main>
             <div class="form">
-                <div v-if="r != null && r == 0" class="form__errors">
+                <div v-if="r != null && r == 0"  class="form__errors">
                     <p>{{ msg }}</p>
                 </div>
                 <div class="form__content">
                     <h1>Log in</h1>
-                    <form action="">
-                        <ul>
-                            <li>
-                                <label for="username">Username</label>
-                                <input type="text" id="username" placeholder="Enter your username">
-                            </li>
-                            <li>
-                                <label for="password">Password</label>
-                                <input type="password" id="password" placeholder="Enter your password">
-                            </li>
-                            <li class="button_section">
-                                <button class="button">Connexion</button>
-                            </li>
-                        </ul>
-                    </form>
+                    <ul>
+                        <li>
+                            <label for="username">Username</label>
+                            <input v-model="username" type="text" id="username" placeholder="Enter your username">
+                        </li>
+                        <li>
+                            <label for="password">Password</label>
+                            <input v-model="password" type="password" id="password" placeholder="Enter your password">
+                        </li>
+                        <li class="button_section">
+                            <button @click="submit" class="button">Connexion</button>
+                        </li>
+                    </ul> 
                 </div>
-                <div class="form__footer">© 2021, Fesdone Collection</div>
+                <div class="form__footer">© 2021, Fesdone Collection {{ test }}</div>
             </div>
         </main>
     </div>
@@ -57,7 +55,45 @@
             el: '#app',
             data: {
                 r: r,
-                msg: msg
+                msg: msg,
+                is_loading: false,
+                is_error: false,
+                username: null,
+                password: null,
+                test: "yoko 2021"
+            },
+            methods: {
+                submit: function(){
+                    let form = new FormData();
+                    let xhr = new XMLHttpRequest();
+                    let bridge = "/api/bridge.php?resource=";
+                    let url = bridge + "/users/login/";
+
+                    form.append('username', this.username);
+                    form.append('password', this.password);
+                    
+                    // handle when the xhr request has been finished to load with success or errors
+                    (function(elem, func){
+                        elem.addEventListener("loadend", function(e){
+                            switch(xhr.status){
+                                case 400:
+                                    func(JSON.parse(xhr.responseText)['message']);
+                                    break;
+                                case 200:
+                                    ManageCookie.set_cookie("tkn", JSON.parse(xhr.responseText)['token'])
+                                    window.location.replace("/orders.html"); 
+                                    break;
+                            }
+                        });
+                    })(xhr, this.show_error_message);
+
+                    xhr.open("POST", url);
+                    xhr.send(form);
+                },
+                show_error_message: function(message){
+                    this.r = 0;
+                    this.msg = message;
+                },
             }
         });
     </script>
