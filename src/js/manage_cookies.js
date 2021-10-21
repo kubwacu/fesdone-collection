@@ -4,7 +4,7 @@
 */
 
 class ManageCookie{
-    static set_cookie(name, value, days=30){
+    static set(name, value, days=30){
         let expiration_time = new Date();
     
         expiration_time.setTime(expiration_time.getTime() + (days*24*60*60*1000));
@@ -13,7 +13,7 @@ class ManageCookie{
         document.cookie = name + "=" + value + ";" + expiration_time + "; path=/";
     }
 
-    static get_cookie(name){ 
+    static get(name){ 
         name = name + "=";
     
         let cookies = decodeURIComponent(document.cookie);
@@ -31,14 +31,14 @@ class ManageCookie{
         return null;
     }
     
-    static get_all_cookies(){
+    static get_all(){
         let cookies = decodeURIComponent(document.cookie);
         let list_cookies = cookies.split(";");
     
         return list_cookies;
     }
     
-    static delete_cookie(name){
+    static delete(name){
         document.cookie = name + "=; expires=Thu, 01 Jan 1970 00:00:00 GMT"
     }
 }

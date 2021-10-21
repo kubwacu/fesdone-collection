@@ -13,7 +13,7 @@
     <script src="lib/vue.js"></script>
     <script src="src/js/manage_cookies.js"></script>
     <script>
-        const tkn = ManageCookie.get_cookie('tkn');
+        const tkn = ManageCookie.get('tkn');
         if(tkn != null) window.location.replace("/orders.html"); 
         let url = new URL(location.href);
         const r = url.searchParams.get('r');
@@ -80,7 +80,7 @@
                                     func(JSON.parse(xhr.responseText)['message']);
                                     break;
                                 case 200:
-                                    ManageCookie.set_cookie("tkn", JSON.parse(xhr.responseText)['token'])
+                                    ManageCookie.set("tkn", JSON.parse(xhr.responseText)['token'])
                                     window.location.replace("/orders.html"); 
                                     break;
                             }

@@ -10,9 +10,18 @@ Vue.component('c-header', {
             <li><a href="users.html">Users</a></li>
         </ul>
         <div class="actions">
-            <a href="messages.html"><i class="far fa-envelope"></i></a>
-            <span class="message_counter">9+</span>
+            <div class="messages_link">
+                <a href="messages.html"><i class="far fa-envelope"></i></a>
+                <span class="message_counter">9+</span>
+            </div>
+            <span @click="logout" class="logout_btn">Log out</span>
         </div>
     </header>
-    `
+    `,
+    methods: {
+        logout: function(){
+            ManageCookie.delete('tkn');
+            window.location.replace("/index.html");
+        }
+    }
 });
