@@ -24,46 +24,18 @@
             </div>
             <div class="content">
                 <table>
-                    <tr>
-                        <td class="image__container"><div class="image"><i class="fas fa-user"></i> </div></td>
-                        <td>Huzaifa Nimushimirimana</td>
+                    <tr v-for="user in users">
+                        <td class="image__container">
+                            <div class="image"><i class="fas fa-user"></i> </div>
+                        </td>
+                        <td class="user">
+                            <ul>
+                                <li class="name">{{ user.first_name }} {{ user.last_name }}  <span>({{ user.username }})</span></li>
+                                <li><strong>Phone:</strong>  {{ user.phone }}</li>
+                                <li><strong>Email:</strong>  {{ user.email }}</li>
+                            </ul>
+                        </td>
                     </tr>
-                    <tr>
-                        <td class="image__container"><div class="image"><i class="fas fa-user"></i> </div></td>
-                        <td>Fleury Banks Nishimwe</td>
-                    </tr>
-                    <tr>
-                        <td class="image__container"><div class="image"><i class="fas fa-user"></i> </div></td>
-                        <td>Huzaifa Nimushimirimana</td>
-                    </tr>
-                    <tr>
-                        <td class="image__container"><div class="image"><i class="fas fa-user"></i> </div></td>
-                        <td>Fleury Banks Nishimwe</td>
-                    </tr>
-                    <tr>
-                        <td class="image__container"><div class="image"><i class="fas fa-user"></i> </div></td>
-                        <td>Huzaifa Nimushimirimana</td>
-                    </tr>
-                    <tr>
-                        <td class="image__container"><div class="image"><i class="fas fa-user"></i> </div></td>
-                        <td>Fleury Banks Nishimwe</td>
-                    </tr>
-                    <tr>
-                        <td class="image__container"><div class="image"><i class="fas fa-user"></i> </div></td>
-                        <td>Huzaifa Nimushimirimana</td>
-                    </tr>
-                    <tr>
-                        <td class="image__container"><div class="image"><i class="fas fa-user"></i> </div></td>
-                        <td>Fleury Banks Nishimwe</td>
-                    </tr>
-                    <tr>
-                        <td class="image__container"><div class="image"><i class="fas fa-user"></i> </div></td>
-                        <td>Huzaifa Nimushimirimana</td>
-                    </tr>
-                    <tr>
-                        <td class="image__container"><div class="image"><i class="fas fa-user"></i> </div></td>
-                        <td>Fleury Banks Nishimwe</td>
-                    </tr> 
                 </table>
             </div>
         </main>
@@ -72,7 +44,38 @@
     <script src="src/components/header.js"></script>
     <script>
         const app = new Vue({
-            el: '#app'
+            el: '#app',
+            data: {
+                users: []
+            },
+            methods: {
+                load_data: function(){
+                    let xhr = new XMLHttpRequest();
+                    let url = Akana.bridge("/users/");
+                                        
+                    (function(elem, callback){
+                        elem.addEventListener("loadend", function(e){
+                            switch(elem.status){
+                                case 400:
+                                    JSON.parse(elem.responseText)['message'];
+                                    break;
+                                case 200:
+                                    callback(JSON.parse(elem.responseText));
+                                    break;
+                            }
+                        })
+                    })(xhr, this.hydrate_data);
+
+                    xhr.open("GET", url);
+                    xhr.send(null);
+                },
+                hydrate_data: function(data){
+                    this.users = data
+                }
+            },
+            created(){
+                this.load_data();
+            }
         })
     </script>
 </body>

@@ -66,17 +66,17 @@
                 submit: function(){
                     let form = new FormData();
                     let xhr = new XMLHttpRequest();
-                    let url = Akana.BRIDGE + "/users/login/";
+                    let url = Akana.bridge("/users/login/");
 
                     form.append('username', this.username);
                     form.append('password', this.password);
                     
                     // handle when the xhr request has been finished to load with success or errors
-                    (function(elem, func){
+                    (function(elem, callaback){
                         elem.addEventListener("loadend", function(e){
                             switch(xhr.status){
                                 case 400:
-                                    func(JSON.parse(xhr.responseText)['message']);
+                                    callaback(JSON.parse(xhr.responseText)['message']);
                                     break;
                                 case 200:
                                     ManageCookie.set("tkn", JSON.parse(xhr.responseText)['token'])

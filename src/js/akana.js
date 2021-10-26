@@ -5,7 +5,9 @@
 
 
 class Akana{
-    static BRIDGE = "/api/bridge.php?resource=";
+    static bridge(url){
+        return "/api/bridge.php?resource=" + url;
+    }
 }
 
 class ManageCookie{

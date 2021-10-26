@@ -18,5 +18,18 @@ table{
         font-size: 40px; 
         color: $black_color;
     }
+    .user{
+        li{
+            font-size: 14px;
+        }
+        .name{
+            font-size: 16px;
+            font-weight: bold;
+        }
+        span{
+            font-weight: lighter;
+            padding: 0px 20px;
+        }
+    }
 
 }
