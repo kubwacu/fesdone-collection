@@ -3,6 +3,11 @@
     Last update: 17/10/2021
 */
 
+
+class Akana{
+    static BRIDGE = "/api/bridge.php?resource=";
+}
+
 class ManageCookie{
     static set(name, value, days=30){
         let expiration_time = new Date();

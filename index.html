@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="temp/libraries/css/all.min.css">
     <link rel="icon" href="src/images/logo.png">
     <script src="lib/vue.js"></script>
-    <script src="src/js/manage_cookies.js"></script>
+    <script src="src/js/akana.js"></script>
     <script>
         const tkn = ManageCookie.get('tkn');
         if(tkn != null) window.location.replace("/orders.html"); 
@@ -66,8 +66,7 @@
                 submit: function(){
                     let form = new FormData();
                     let xhr = new XMLHttpRequest();
-                    let bridge = "/api/bridge.php?resource=";
-                    let url = bridge + "/users/login/";
+                    let url = Akana.BRIDGE + "/users/login/";
 
                     form.append('username', this.username);
                     form.append('password', this.password);
