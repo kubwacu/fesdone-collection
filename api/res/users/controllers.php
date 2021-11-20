@@ -5,13 +5,17 @@
     require_once '../res/users/serializers.php';
 
     use Akana\Response;
-
-    use users\Models\User;
+use Akana\Utils;
+use users\Models\User;
     use users\Serializers\UserSerializer;
 
     // login/
     class LoginController{
         static public function post(){
+            $user_auth = Utils::get_auth_user();
+            if($user_auth){
+                echo "your are connected";
+            }
             return new Response(["token" => User::authenticate()]);
         }
     }

@@ -104,6 +104,20 @@
 
             return $token;
         }
+
+        static function get_auth_user(){
+            require_once '../'.AUTHENTIFICATION['file'];
+
+            $auth_class = AUTHENTIFICATION['model'];
+            $auth_table = ModelUtils::get_table_name($auth_class);
+            $auth_table_token = $auth_table.'__token';
+
+            if(empty(AUTH_USER_TOKEN)) return null;
+            
+            $token = explode(" ", AUTH_USER_TOKEN)[1];
+
+            return call_user_func_array(array($auth_class, 'exec_sql'), ["select * from ".$auth_table." where token in (select pk from ".$auth_table_token." where token='".$token."');"]);
+        }
     }
 
     abstract class URI{

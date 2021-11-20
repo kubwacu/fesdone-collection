@@ -71,27 +71,41 @@ use Akana\Exceptions\NoRootEndpointException;
                         }
 
                         else{
-                            echo "Authentification state for '".HTTP_VERB."': ";
-                            echo ($auth_state[HTTP_VERB] == true)? "On" : "Off";
+                            // echo "Authentification state for '".HTTP_VERB."': ";
+                            // echo ($auth_state[HTTP_VERB] == true)? "On" : "Off";
 
                             if($auth_state[HTTP_VERB] == true){
                                 $auth_file = '../'.AUTHENTIFICATION['file'];
                                 $auth_class = AUTHENTIFICATION['model'];
+                                $auth_table = ModelUtils::get_table_name($auth_class);
+                                $auth_table_token = $auth_table.'__token';
+                                $token = explode(" ", AUTH_USER_TOKEN)[1];
 
                                 if(!file_exists($auth_file)){
                                     throw new AuthentificationException("file '".AUTHENTIFICATION['file']."' do not exist.");
                                 }
                                 else{
+                                    require_once $auth_file;
+
                                     if(!class_exists($auth_class)){
                                         throw new AuthentificationException("class '".$auth_class."' do not exist in file '".AUTHENTIFICATION['file']."'.");
                                     }
                                 }
-
                                 
-                                $a = new $auth_class();
-                                echo AUTHENTIFICATION['file'];
-                            }
+                                if(empty(AUTH_USER_TOKEN)) return new Response(["message" => "to access to this resource, you need to be authenticated."], STATUS_400_BAD_REQUEST);
+                                
+                                
+                                $auth_user = call_user_func_array(array($auth_class, 'exec_sql'), ["select * from ".$auth_table." where token in (select pk from ".$auth_table_token." where token='".$token."');"]);
+                            
+                                if($auth_user == null){
+                                    return new Response([
+                                        "message" => "token key is incorrect."
+                                    ], STATUS_400_BAD_REQUEST);
+                                }
+                                
 
+                            }
+                            
                             require '../res/'. $resource .'/controllers.php';
                             
 
