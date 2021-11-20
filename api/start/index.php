@@ -9,15 +9,15 @@
     */
     require '../config.php';
     require '../src/status.php';  
-    require '../src/utils.php';
-    require '../src/database.php';
-    require '../src/exceptions.php';
-    require '../src/model.php';
-    require '../src/models/user.php';
-    require '../src/models/token.php';
-    require '../src/serializer.php';
-    require '../src/response.php';
-    require '../src/main.php';
+    require_once '../src/utils.php';
+    require_once '../src/database.php';
+    require_once '../src/exceptions.php';
+    require_once '../src/model.php';
+    require_once '../src/models/user.php';
+    require_once '../src/models/token.php';
+    require_once '../src/serializer.php';
+    require_once '../src/response.php';
+    require_once '../src/main.php';
 
     use Akana\Main;
     use Akana\Utils;

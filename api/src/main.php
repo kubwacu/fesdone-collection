@@ -10,7 +10,9 @@
     namespace Akana;
 
     use Akana\Exceptions\AkanaException;
-    use Akana\Exceptions\NoRootEndpointException;
+use Akana\Exceptions\AuthentificationException;
+use Akana\Exceptions\ControllerNotFoundException;
+use Akana\Exceptions\NoRootEndpointException;
     use Akana\Exceptions\HttpVerbNotAuthorizedException;
     use Akana\Exceptions\EmptyAppResourcesException;
     use Akana\Exceptions\ResourceNotFoundException;
@@ -57,9 +59,11 @@
                     else{
                         $endpoint = URI::extract_endpoint($resource, $uri); 
                         $endpoint_details = Endpoint::details($resource, $endpoint);
-                        $controller = empty($endpoint_details) ? 
-                            "" : 
-                            '\\'.$resource.'\\Controllers\\'.$endpoint_details['controller'];
+                        $controller = empty($endpoint_details) ? "" : '\\'.$resource.'\\Controllers\\'.$endpoint_details['controller'];
+                        $auth_state = $endpoint_details["auth_state"];
+
+                        if(is_bool($auth_state)) $auth_state = [HTTP_VERB => $auth_state];
+                        
                         
                         if(empty($controller)){
                             $message = "endpoint '".$endpoint."' not found in resource '".$resource.".";
@@ -67,10 +71,29 @@
                         }
 
                         else{
+                            echo "Authentification state for '".HTTP_VERB."': ";
+                            echo ($auth_state[HTTP_VERB] == true)? "On" : "Off";
+
+                            if($auth_state[HTTP_VERB] == true){
+                                $auth_file = '../'.AUTHENTIFICATION['file'];
+                                $auth_class = AUTHENTIFICATION['model'];
+
+                                if(!file_exists($auth_file)){
+                                    throw new AuthentificationException("file '".AUTHENTIFICATION['file']."' do not exist.");
+                                }
+                                else{
+                                    if(!class_exists($auth_class)){
+                                        throw new AuthentificationException("class '".$auth_class."' do not exist in file '".AUTHENTIFICATION['file']."'.");
+                                    }
+                                }
+
+                                
+                                $a = new $auth_class();
+                                echo AUTHENTIFICATION['file'];
+                            }
+
                             require '../res/'. $resource .'/controllers.php';
                             
-                            // echo "Authentification state: ";
-                            // echo ($endpoint_details['auth_state'] == true)? "On" : "Off";
 
                             if(!method_exists($controller, HTTP_VERB)){
                                 $message = "method '".HTTP_VERB."' is not authorized to this uri '".URI."'.";
