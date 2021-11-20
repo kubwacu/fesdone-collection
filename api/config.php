@@ -15,7 +15,7 @@
     define('AUTHENTIFICATION', [
         'file' => 'res\users\models.php',
         'model' => 'users\Models\User',
-        'active' => true
+        'state' => true
     ]);
     define('DATABASE', [
         'type'      => DATABASE_TYPE,

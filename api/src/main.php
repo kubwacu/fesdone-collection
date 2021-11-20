@@ -69,6 +69,9 @@
                         else{
                             require '../res/'. $resource .'/controllers.php';
                             
+                            // echo "Authentification state: ";
+                            // echo ($endpoint_details['auth_state'] == true)? "On" : "Off";
+
                             if(!method_exists($controller, HTTP_VERB)){
                                 $message = "method '".HTTP_VERB."' is not authorized to this uri '".URI."'.";
                                 throw new HttpVerbNotAuthorizedException($message);

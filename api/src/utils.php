@@ -135,15 +135,26 @@
         static function details(string $resource, string $endpoint): array{
             require '../res/'. $resource . '/endpoints.php';
             
+            $auth_state = AUTHENTIFICATION['state'];
+
             foreach(ENDPOINTS as $ep => $controller){
+                if(isset($controller[1]) && is_bool($controller[1])){
+                    $auth_state = $controller[1];
+                }
+
                 if(self::is_dynamic($ep) == true){
-                    if(preg_match_all('#^'. self::to_regex($ep) .'$#', $endpoint, $data))
-                        return ["controller" => $controller, "args" => self::get_args($ep, $data)];   
+                    if(preg_match_all('#^'. self::to_regex($ep) .'$#', $endpoint, $data)){
+                        return [
+                            "controller" => $controller[0], 
+                            "auth_state" => $auth_state,
+                            "args" => self::get_args($ep, $data)
+                        ]; 
+                    }  
                 }
 
                 else{
                     if($ep == $endpoint){
-                        return ["controller" => $controller, "args" =>  []];
+                        return ["controller" => $controller[0], "auth_state" => $auth_state, "args" =>  []];
                     }
                 }
             }
