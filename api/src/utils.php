@@ -106,7 +106,7 @@
         }
 
         static function get_auth_user(){
-            require_once '../'.AUTHENTIFICATION['file'];
+            require_once API_ROOT.'/'.AUTHENTIFICATION['file'];
 
             $auth_class = AUTHENTIFICATION['model'];
             $auth_table = ModelUtils::get_table_name($auth_class);
@@ -147,7 +147,7 @@
 
     abstract class Endpoint{
         static function details(string $resource, string $endpoint): array{
-            require '../res/'. $resource . '/endpoints.php';
+            require API_ROOT.'/res/'. $resource . '/endpoints.php';
             
             $auth_state = AUTHENTIFICATION['state'];
 

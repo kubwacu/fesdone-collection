@@ -10,9 +10,9 @@
     namespace Akana;
 
     use Akana\Exceptions\AkanaException;
-use Akana\Exceptions\AuthentificationException;
-use Akana\Exceptions\ControllerNotFoundException;
-use Akana\Exceptions\NoRootEndpointException;
+    use Akana\Exceptions\AuthentificationException;
+    use Akana\Exceptions\ControllerNotFoundException;
+    use Akana\Exceptions\NoRootEndpointException;
     use Akana\Exceptions\HttpVerbNotAuthorizedException;
     use Akana\Exceptions\EmptyAppResourcesException;
     use Akana\Exceptions\ResourceNotFoundException;
@@ -106,7 +106,7 @@ use Akana\Exceptions\NoRootEndpointException;
 
                             }
                             
-                            require '../res/'. $resource .'/controllers.php';
+                            require API_ROOT.'/res/'. $resource .'/controllers.php';
                             
 
                             if(!method_exists($controller, HTTP_VERB)){

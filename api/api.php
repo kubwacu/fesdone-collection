@@ -7,4 +7,9 @@
     * @author (kalculata) Huzaifa Nimushimirimana <nprincehuzaifa@gmail.com>
     *
     */
-    header('location: start/index.php?use_bridge=1&uri='.$_GET['resource'].'&server='.$_SERVER.'&data='.json_encode($_POST));
+    $BRIDGE = __DIR__;
+    $BRIDGE_URI = $_GET['resource'];
+    $SERVER_COPY = $_SERVER;
+    $BRIDGE_DATA = json_encode($_POST);
+   
+    require 'start/index.php';

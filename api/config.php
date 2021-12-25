@@ -1,5 +1,5 @@
 <?php
-    require '../env.php';
+    require API_ROOT.'/env.php';
 
     define('ROOT', false);
     define('DEBUG', true);

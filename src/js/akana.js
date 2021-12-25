@@ -6,7 +6,7 @@
 
 class Akana{
     static bridge(url){
-        return "/api/bridge.php?resource=" + url;
+        return "/api/api.php?resource=" + url;
     }
 }
 

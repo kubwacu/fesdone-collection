@@ -1,17 +1,18 @@
 <?php
     namespace users\Controllers;
 
-    require_once '../res/users/models.php';
-    require_once '../res/users/serializers.php';
+    require_once API_ROOT.'/res/users/models.php';
+    require_once API_ROOT.'/res/users/serializers.php';
 
     use Akana\Response;
-use Akana\Utils;
-use users\Models\User;
+    use Akana\Utils;
+    use users\Models\User;
     use users\Serializers\UserSerializer;
 
     // login/
     class LoginController{
         static public function post(){
+            
             $user_auth = Utils::get_auth_user();
             if($user_auth){
                 echo "your are connected";

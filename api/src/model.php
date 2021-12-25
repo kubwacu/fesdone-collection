@@ -211,7 +211,13 @@
             $token_class = $model['table'].'__token';
             $token = call_user_func_array([Token::class, 'get'], [$user->token, $token_class]);
 
-            return $token->token;
+            if($token != NULL){
+                return $token->token;
+            }
+            else{
+                return "";
+            }
+
         }
 
         static public function exec_sql(string $query){
