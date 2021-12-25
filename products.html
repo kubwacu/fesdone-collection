@@ -35,37 +35,10 @@
                             <th>Actions</th>
                         </tr>
                    <tbody>
-                        <tr> 
+                        <tr v-for="product in products"> 
                             <td><div class="image"></div></td>
-                            <td><a href="product.html">Product test 2</a></td>
-                            <td>1 000 fbu</td>
-                            <td class="action">
-                                <a href="htpp://" class="action--edit" title="Edit product"><i class="fas fa-edit"></i></a>
-                                <a href="http://" class="action--delete" title="Delete product"><i class="fas fa-trash-alt"></i></a>
-                           </td>
-                        </tr>
-                        <tr> 
-                            <td><div class="image"></div></td>
-                            <td><a href="product.html">Product test 2</a></td>
-                            <td>1 000 fbu</td>
-                            <td class="action">
-                                <a href="htpp://" class="action--edit" title="Edit product"><i class="fas fa-edit"></i></a>
-                                <a href="http://" class="action--delete" title="Delete product"><i class="fas fa-trash-alt"></i></a>
-                           </td>
-                        </tr>
-                        <tr> 
-                            <td><div class="image"></div></td>
-                            <td><a href="product.html">Product test 2</a></td>
-                            <td>1 000 fbu</td>
-                            <td class="action">
-                                <a href="htpp://" class="action--edit" title="Edit product"><i class="fas fa-edit"></i></a>
-                                <a href="http://" class="action--delete" title="Delete product"><i class="fas fa-trash-alt"></i></a>
-                           </td>
-                        </tr>
-                        <tr> 
-                            <td><div class="image"></div></td>
-                            <td><a href="product.html">Product test 2</a></td>
-                            <td>1 000 fbu</td>
+                            <td><a href="product.html">{{ product.name }}</a></td>
+                            <td>{{ product.price }} fbu</td>
                             <td class="action">
                                 <a href="htpp://" class="action--edit" title="Edit product"><i class="fas fa-edit"></i></a>
                                 <a href="http://" class="action--delete" title="Delete product"><i class="fas fa-trash-alt"></i></a>
@@ -83,7 +56,21 @@
     <script src="src/components/header.js"></script>
     <script>
         const app = new Vue({
-            el: '#app'
+            el: '#app',
+            data: {
+                products: []
+            },
+            created(){
+                let q = new AkanaXhr({
+                    method: 'get',
+                    resource: '/products/',
+                    headers: new Map([
+                        ["Authorization", "Token " + AkanaCookie.get('tkn')]
+                    ])
+                }).run().then(function(result){
+                    app.products = result.content;
+                });
+            }
         })
     </script>
 </body>

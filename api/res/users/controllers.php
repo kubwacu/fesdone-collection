@@ -28,7 +28,6 @@
             $data->save();
 
             $serializer = UserSerializer::serialize($data);
-
             return new Response($serializer['data']);
         }
 

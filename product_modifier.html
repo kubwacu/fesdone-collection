@@ -29,19 +29,19 @@
             </div>
             <div class="form">
                 <label for="">Product title</label>
-                <input class="name" type="text" placeholder="Enter the product title" maxlength="50"/>
+                <input v-model="name" class="name" type="text" placeholder="Enter the product title" maxlength="50"/>
 
                 <label for="">Size of the product</label>
-                <input class="name" type="text" placeholder="Enter the size of tha product" maxlength="11"/>
+                <input v-model="size" class="name" type="text" placeholder="Enter the size of tha product" maxlength="11"/>
 
                 <label for="">Price of the product</label>
-                <input class="name" type="text" placeholder="How much this product cost?" maxlength="11"/>
+                <input v-model="price" class="name" type="text" placeholder="How much this product cost?" maxlength="11"/>
 
                 <label for="">Description of the product</label>
-                <textarea class="information" placeholder="Entrer more detail about the product"></textarea>
+                <textarea v-model="description" class="information" placeholder="Entrer more detail about the product"></textarea>
             </div>
             <div class="button_section">
-                <button class="button">Save</button>
+                <button class="button" @click="save">Save</button>
                 <button class="button button--delete">Cancel</button>
             </div>
         </div>
@@ -50,7 +50,38 @@
     <script src="src/components/header.js"></script>
     <script>
         const app = new Vue({
-            el: '#app'
+            el: '#app',
+            data: {
+                name: null,
+                size: null,
+                price: null,
+                description: null
+            },
+            methods: {
+                save: function(){
+                    let form = new FormData();
+                    form.append('name', this.name);
+                    form.append('size', this.size);
+                    form.append('price', this.price);
+                    form.append('description', this.description);
+                    
+                    let q = new AkanaXhr({
+                        resource: '/products/',
+                        method: 'post',
+                        data: form,
+                        headers: new Map([
+                        ["Authorization", "Token " + AkanaCookie.get('tkn')]
+                    ])
+                    }).run().then(function(result){
+                        if(result.status == 200){
+                            alert("Product saved");
+                        }
+                        else{
+                            alert("Product not saved");
+                        }
+                    });
+                }
+            }
         })
     </script>
 </body>
