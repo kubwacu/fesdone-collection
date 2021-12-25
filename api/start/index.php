@@ -29,14 +29,6 @@
     use Akana\Main;
     use Akana\Utils;
 
-    function main(){
-        try{
-            set_error_handler([Utils::class, 'stop_error_handler']);
-            echo Main::execute(URI);
-        } catch (Exception $e) {
-            include_once(API_ROOT.'/src/errors_manager.php');
-        }
-    }
     
     if(isset($BRIDGE)){
         define('URI',  $BRIDGE_URI);
@@ -63,6 +55,13 @@
         }
     }
 
-    main();
+    function main(){
+        try{
+            set_error_handler([Utils::class, 'stop_error_handler']);
+            echo Main::execute(URI);
+        } catch (Exception $e) {
+            include_once(API_ROOT.'/src/errors_manager.php');
+        }
+    } main();
     
    

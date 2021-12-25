@@ -10,6 +10,34 @@ class Akana{
     }
 }
 
+
+class AkanaXhr{
+    constructor(params){
+        this.method = params.method;
+        this.query_params = params.query_params;
+        this.data = params.data;
+        this.resource = params.resource;
+        this.result = [];
+    }
+
+    run(){
+        let resource = this.resource;
+        let method = this.method;
+
+        return new Promise(function(success, failed) {
+            let xhr = new XMLHttpRequest();
+
+            xhr.onloadend = function(){
+                success(JSON.parse(xhr.responseText));
+            };
+            xhr.onerror = failed;
+
+            xhr.open(method, "/api/api.php?resource=" + resource);
+            xhr.send(null); 
+        });
+    }
+}
+
 class ManageCookie{
     static set(name, value, days=30){
         let expiration_time = new Date();

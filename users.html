@@ -49,32 +49,19 @@
                 users: []
             },
             methods: {
-                load_data: function(){
-                    let xhr = new XMLHttpRequest();
-                    let url = Akana.bridge("/users/");
-                                        
-                    (function(elem, callback){
-                        elem.addEventListener("loadend", function(e){
-                            switch(elem.status){
-                                case 400:
-                                    JSON.parse(elem.responseText)['message'];
-                                    break;
-                                case 200:
-                                    callback(JSON.parse(elem.responseText));
-                                    break;
-                            }
-                        })
-                    })(xhr, this.hydrate_data);
-
-                    xhr.open("GET", url);
-                    xhr.send(null);
-                },
-                hydrate_data: function(data){
-                    this.users = data
+                load_data: function(data){
+                    this.users = data;
                 }
             },
             created(){
-                this.load_data();
+                (function(callback){
+                    let q = new AkanaXhr({
+                        method: 'get',
+                        resource: '/users/',
+                    }).run().then(function(data){
+                        callback(data);
+                    });
+                })(this.load_data);
             }
         })
     </script>

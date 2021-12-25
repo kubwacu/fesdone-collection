@@ -23,6 +23,7 @@
 
     class Main{
         static public function execute(string $uri): Response{
+            
             if($uri == '/'){
                 if(!self::root_isset()){
                     $message = "resource '/' not found.";
@@ -69,18 +70,19 @@
                             $message = "endpoint '".$endpoint."' not found in resource '".$resource.".";
                             throw new EndpointNotFoundException($message);
                         }
-
+                        
                         else{
                             // echo "Authentification state for '".HTTP_VERB."': ";
                             // echo ($auth_state[HTTP_VERB] == true)? "On" : "Off";
 
                             if($auth_state[HTTP_VERB] == true){
-                                $auth_file = '../'.AUTHENTIFICATION['file'];
+                                $auth_file = API_ROOT.'/'.AUTHENTIFICATION['file'];
                                 $auth_class = AUTHENTIFICATION['model'];
                                 $auth_table = ModelUtils::get_table_name($auth_class);
                                 $auth_table_token = $auth_table.'__token';
-                                $token = explode(" ", AUTH_USER_TOKEN)[1];
 
+                                if(!empty(AUTH_USER_TOKEN)) $token = explode(" ", AUTH_USER_TOKEN)[1];
+                                
                                 if(!file_exists($auth_file)){
                                     throw new AuthentificationException("file '".AUTHENTIFICATION['file']."' do not exist.");
                                 }
@@ -92,8 +94,8 @@
                                     }
                                 }
                                 
-                                if(empty(AUTH_USER_TOKEN)) return new Response(["message" => "to access to this resource, you need to be authenticated."], STATUS_400_BAD_REQUEST);
                                 
+                                if(empty(AUTH_USER_TOKEN)) return new Response(["message" => "to access to this resource, you need to be authenticated."], STATUS_400_BAD_REQUEST);
                                 
                                 $auth_user = call_user_func_array(array($auth_class, 'exec_sql'), ["select * from ".$auth_table." where token in (select pk from ".$auth_table_token." where token='".$token."');"]);
                             
