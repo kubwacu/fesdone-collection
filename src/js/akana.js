@@ -1,6 +1,6 @@
 /* 
     Author: Kalculata 
-    Last update: 17/10/2021
+    Last update: 25/12/2021
 */
 
 
@@ -10,35 +10,44 @@ class Akana{
     }
 }
 
-
 class AkanaXhr{
     constructor(params){
         this.method = params.method;
         this.query_params = params.query_params;
         this.data = params.data;
         this.resource = params.resource;
-        this.result = [];
+        this.headers= params.headers;
     }
 
     run(){
         let resource = this.resource;
         let method = this.method;
+        let headers =  this.headers;
+        let data = this.data;
 
         return new Promise(function(success, failed) {
             let xhr = new XMLHttpRequest();
 
             xhr.onloadend = function(){
-                success(JSON.parse(xhr.responseText));
+                let result = {content: JSON.parse(xhr.responseText), status: xhr.status}
+                success(result);
             };
             xhr.onerror = failed;
-
             xhr.open(method, "/api/api.php?resource=" + resource);
-            xhr.send(null); 
+
+            if(headers !== undefined){
+                headers.forEach(function(value, key) {
+                    xhr.setRequestHeader(key, value);
+                });
+            }
+
+            if(data) xhr.send(data); 
+            else xhr.send(null);
         });
     }
 }
 
-class ManageCookie{
+class AkanaCookie{
     static set(name, value, days=30){
         let expiration_time = new Date();
     

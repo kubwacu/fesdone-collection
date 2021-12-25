@@ -1,6 +1,6 @@
 <?php
     define('ENDPOINTS', [
-        '/' => ['UsersController', false],
+        '/' => ['UsersController'],
         "/login/" =>  ["LoginController", false],
         '/(user_id:int)/' => ['ManageUserController'],
     ]);

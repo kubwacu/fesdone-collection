@@ -20,7 +20,7 @@ Vue.component('c-header', {
     `,
     methods: {
         logout: function(){
-            ManageCookie.delete('tkn');
+            AkanaCookie.delete('tkn');
             window.location.replace("/index.html");
         }
     }

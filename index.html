@@ -13,7 +13,7 @@
     <script src="lib/vue.js"></script>
     <script src="src/js/akana.js"></script>
     <script>
-        const tkn = ManageCookie.get('tkn');
+        const tkn = AkanaCookie.get('tkn');
         if(tkn != null) window.location.replace("/orders.html"); 
         let url = new URL(location.href);
         const r = url.searchParams.get('r');
@@ -44,7 +44,7 @@
                         </li>
                     </ul> 
                 </div>
-                <div class="form__footer">© 2021, Fesdone Collection {{ test }}</div>
+                <div class="form__footer">© 2021, Fesdone Collection</div>
             </div>
         </main>
     </div>
@@ -60,34 +60,26 @@
                 is_error: false,
                 username: null,
                 password: null,
-                test: "yoko 2021"
             },
             methods: {
                 submit: function(){
                     let form = new FormData();
-                    let xhr = new XMLHttpRequest();
-                    let url = Akana.bridge("/users/login/");
-
                     form.append('username', this.username);
                     form.append('password', this.password);
                     
-                    // handle when the xhr request has been finished to load with success or errors
-                    (function(elem, callaback){
-                        elem.addEventListener("loadend", function(e){
-                            switch(xhr.status){
-                                case 400:
-                                    callaback(JSON.parse(xhr.responseText)['message']);
-                                    break;
-                                case 200:
-                                    ManageCookie.set("tkn", JSON.parse(xhr.responseText)['token'])
-                                    window.location.replace("/orders.html"); 
-                                    break;
-                            }
-                        });
-                    })(xhr, this.show_error_message);
-
-                    xhr.open("POST", url);
-                    xhr.send(form);
+                    let q = new AkanaXhr({
+                        resource: '/users/login/',
+                        method: 'post',
+                        data: form
+                    }).run().then(function(result){
+                        if(result.status == 400){
+                            app.show_error_message(result.content['message']);
+                        }
+                        else if(result.status == 200){
+                            AkanaCookie.set("tkn", result.content['token'])
+                            window.location.replace("/orders.html"); 
+                        }
+                    });
                 },
                 show_error_message: function(message){
                     this.r = 0;
