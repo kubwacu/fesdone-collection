@@ -24,8 +24,12 @@
         </div>
         <div class="content">
             <div class="product">
-                <div class="product__cover"></div>
-                <i class="fas fa-image product__cover_btn"></i>
+                
+                <div class="product__cover"><i class="fas fa-image"></i></div>
+                <form enctype="multipart/form-data">
+                    <input type="file">
+                </form>
+                <i class="fas fa-camera product__cover_btn"></i>
             </div>
             <div class="form">
                 <label for="">Product title</label>
@@ -74,7 +78,7 @@
                     ])
                     }).run().then(function(result){
                         if(result.status == 200){
-                            alert("Product saved");
+                            window.location.replace('/products.html');
                         }
                         else{
                             alert("Product not saved");
