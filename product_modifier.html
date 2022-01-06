@@ -13,44 +13,53 @@
     <script src="lib/vue.js"></script>
     <script src="src/js/akana.js"></script>
     <script src="src/js/check_user.js"></script>
+    <script src="lib/croppie.js"></script>
+    <link rel="stylesheet" href="lib/croppie.css">
     <title>Edit product - Fesdone collection</title>
 </head>
 <body>
     <div id="app">
         <c-header></c-header>
         <main>
-        <div class="header">
-            <h1>Add and Modify</h1>
+            <div class="header">
+                <h1>Add and Modify</h1>
+            </div>
+            <div class="content">
+                <div class="product">
+                    
+                    <div class="product__cover"><i class="fas fa-image"></i></div>
+                    <form enctype="multipart/form-data">
+                        <input type="file">
+                    </form>
+                    <i class="fas fa-camera product__cover_btn"></i>
+                </div>
+                <div class="form">
+                    <label for="">Product title</label>
+                    <input v-model="name" class="name" type="text" placeholder="Enter the product title" maxlength="50"/>
+
+                    <label for="">Size of the product</label>
+                    <input v-model="size" class="name" type="text" placeholder="Enter the size of tha product" maxlength="11"/>
+
+                    <label for="">Price of the product</label>
+                    <input v-model="price" class="name" type="text" placeholder="How much this product cost?" maxlength="11"/>
+
+                    <label for="">Description of the product</label>
+                    <textarea v-model="description" class="information"
+                        placeholder="Entrer more detail about the product"></textarea>
+                </div>
+                <div class="button_section">
+                    <button class="button" @click="save">Save</button>
+                    <button class="button button--delete">Cancel</button>
+                </div>
+            </div> 
         </div>
-        <div class="content">
-            <div class="product">
-                
-                <div class="product__cover"><i class="fas fa-image"></i></div>
-                <form enctype="multipart/form-data">
-                    <input type="file">
-                </form>
-                <i class="fas fa-camera product__cover_btn"></i>
-            </div>
-            <div class="form">
-                <label for="">Product title</label>
-                <input v-model="name" class="name" type="text" placeholder="Enter the product title" maxlength="50"/>
-
-                <label for="">Size of the product</label>
-                <input v-model="size" class="name" type="text" placeholder="Enter the size of tha product" maxlength="11"/>
-
-                <label for="">Price of the product</label>
-                <input v-model="price" class="name" type="text" placeholder="How much this product cost?" maxlength="11"/>
-
-                <label for="">Description of the product</label>
-                <textarea v-model="description" class="information" placeholder="Entrer more detail about the product"></textarea>
-            </div>
-            <div class="button_section">
-                <button class="button" @click="save">Save</button>
-                <button class="button button--delete">Cancel</button>
+        <div class="overlay">
+            <div class="container">
+                <div id="resizer">
+                </div>
             </div>
         </div>
-    </div>
-</main>
+    </main>
     <script src="src/components/header.js"></script>
     <script>
         const app = new Vue({
@@ -88,5 +97,6 @@
             }
         })
     </script>
+    <script src="src/js/crop.js"></script>
 </body>
 </html>
