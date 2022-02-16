@@ -26,9 +26,9 @@
     abstract class CustomException extends Exception implements ExceptionInterface{
         protected $message;
         protected $code = STATUS_500_INTERNAL_SERVER_ERROR;
-        protected $file;
-        protected $line;
-        protected $trace;
+        // protected $file;
+        // protected $line;
+        // protected $trace;
 
         public function __construct($message=null, $code=0){
             parent::__construct($message, $code);

@@ -27,10 +27,13 @@
             <div class="modal__overlay">
                 <div class="modal__content">
                     <ul>
-                        <li></li>
-                        <li></li>
-                        <li></li>
+                        <li class="dot__1"></li>
+                        <li class="dot__2"></li>
+                        <li class="dot__3"></li>
                     </ul>
+                    <p>
+                        loading...
+                    </p>
                 </div>
             </div>
         </div>
@@ -74,6 +77,9 @@
             },
             methods: {
                 submit: function(){
+                    let modal = document.querySelector(".modal__container");
+                    modal.style.display = "block";
+
                     let form = new FormData();
                     form.append('username', this.username);
                     form.append('password', this.password);
@@ -83,6 +89,8 @@
                         method: 'post',
                         data: form
                     }).run().then(function(result){
+                        modal.style.display = "none";
+
                         if(result.status == 400){
                             app.show_error_message(result.content['message']);
                         }
