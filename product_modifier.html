@@ -26,18 +26,12 @@
             </div>
             <div class="content">
                 <div class="product">
-                    <div class="overlayer" id="overlayer">
-                        <div class="overlayer__quit" id="overlayer_quit"><i class="fas fa-times"></i></div>
-                        <div class="cover_crop">
-                            <div class="cover_crop__preview" id="cover_demo"></div>
-                            <div class="cover_crop__button"><button class="button-1" id="cover_save_button">Ajouter</button></div>
-                        </div>
-                    </div>
-                    <!-- <div class="product__cover"><i class="fas fa-image"></i></div>
+                    
+                    <div class="product__cover"><i class="fas fa-image"></i></div>
                     <form enctype="multipart/form-data">
-                        <input type="file">
+                        <input type="file" class="file_input" id="file_input">
                     </form>
-                    <i class="fas fa-camera product__cover_btn"></i> -->
+                    <label for="file_input"><i class="fas fa-camera product__cover_btn"></i></label>
                 </div>
                 <div class="form">
                     <label for="">Product title</label>
@@ -58,12 +52,6 @@
                     <button class="button button--delete">Cancel</button>
                 </div>
             </div> 
-        </div>
-        <div class="overlay">
-            <div class="container">
-                <div id="resizer">
-                </div>
-            </div>
         </div>
     </main>
     <script src="src/components/header.js"></script>
@@ -99,7 +87,8 @@
                             alert("Product not saved");
                         }
                     });
-                }
+                },
+                
             }
         })
     </script>

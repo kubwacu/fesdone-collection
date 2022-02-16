@@ -1,6 +1,8 @@
 @import 'main';
 
- 
+ .content{
+     padding: 20px;
+ }
 .product{
     padding: 50px;
     position: relative;
@@ -8,13 +10,13 @@
     &__cover{
         width: 200px;
         height: 200px;
-        background-color: $gray_color;
+        background-color: #ccc;
         border-radius: 50%;
         margin: auto;
 
         i{
             position: relative;
-            color: #ccc;
+            color: $main_color;
             top: 75px;
             font-size: 3.5em;
             left: 75px;
@@ -35,9 +37,8 @@
         }
     }
 } 
-
-.form, input, textarea{
-    text-align: center;
+form{
+    display: none;
 }
 
 .form{
@@ -53,7 +54,7 @@
         margin: 5px 0 20px 0;  
         display: inline-block;  
         border: none;  
-        background: #f1f1f1;  
+        background: #ccc;  
         font-size: 14px;
         padding: .2em .5em;
     
@@ -70,7 +71,7 @@
     } 
     textarea{
         height: 200px;
-        padding: 20px 200px;
+        padding: 10px;
         resize: none;
     }
     
