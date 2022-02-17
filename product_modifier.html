@@ -25,11 +25,11 @@
                 <h1>Add and Modify</h1>
             </div>
             <div class="content">
-                <div class="product">
+                <div class="product" >
                     
-                    <div class="product__cover"><i class="fas fa-image"></i></div>
+                    <div  class="product__cover" id="imagePreview"><i class="fas fa-image"></i></div>
                     <form enctype="multipart/form-data">
-                        <input type="file" class="file_input" id="file_input">
+                        <input type="file" class="file_input" id="file_input" onchange="return fileValidation()">
                     </form>
                     <label for="file_input"><i class="fas fa-camera product__cover_btn"></i></label>
                 </div>
@@ -93,5 +93,6 @@
         })
     </script>
     <script src="src/js/crop.js"></script>
+    <script src="src/js/file_input.js"></script>
 </body>
 </html>
