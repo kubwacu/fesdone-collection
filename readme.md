@@ -24,7 +24,7 @@
 `git fetch` then  `git diff develop origin/develop`: to check difference in online bas code and loca code
 `php -S 127.0.0.1:8000 -t api/start` lance server for the api
 `php -S 127.0.0.1:8000` lance server to test the application
-
+`git config --global user.email/name""` configuration of your account for github
 # alert
 - create a folder name : `temp`
 - copy into fontawesome offline folder named `libraries`
