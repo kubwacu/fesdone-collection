@@ -27,24 +27,24 @@
             <div class="content">
                 <div class="product" >
                     
-                    <div  class="product__cover" id="imagePreview"><i class="fas fa-image"></i></div>
+                    <div  class="product__cover" id="imagePreview" ><i class="fas fa-image"></i></div>
                     <form enctype="multipart/form-data">
                         <input type="file" class="file_input" id="file_input" onchange="return fileValidation()">
                     </form>
                     <label for="file_input"><i class="fas fa-camera product__cover_btn"></i></label>
                 </div>
                 <div class="form">
-                    <label for="">Product title</label>
-                    <input v-model="name" class="name" type="text" placeholder="Enter the product title" maxlength="50"/>
+                    <label for="" asp-for="ProductName" >Product title</label>
+                    <input v-model="name" class="name" asp-for="ProductName" id="ProductName" type="text" placeholder="Enter the product title" maxlength="50"/>
 
-                    <label for="">Size of the product</label>
-                    <input v-model="size" class="name" type="text" placeholder="Enter the size of tha product" maxlength="11"/>
+                    <label for="" asp-for="ProductSizeInBytes" >Size of the product</label>
+                    <input v-model="size" class="name" asp-for="ProductSizeInBytes" id="ProductSizeInBytes" type="text" placeholder="Enter the size of tha product" maxlength="11"/>
 
-                    <label for="">Price of the product</label>
-                    <input v-model="price" class="name" type="text" placeholder="How much this product cost?" maxlength="11"/>
+                    <label for="" asp-for="ProductPriceInBytes" >Price of the product</label>
+                    <input v-model="price" class="name" asp-for="ProductPriceInBytes" id="ProductPriceInBytes" type="text" placeholder="How much this product cost?" maxlength="11"/>
 
-                    <label for="">Description of the product</label>
-                    <textarea v-model="description" class="information"
+                    <label for="" asp-for="ProductDescription" >Description of the product</label>
+                    <textarea v-model="description" class="information" asp-for="ProductDescription" id="ProductDescription"
                         placeholder="Entrer more detail about the product"></textarea>
                 </div>
                 <div class="button_section">
@@ -66,11 +66,36 @@
             },
             methods: {
                 save: function(){
+                    let title_field = document.getElementById("ProductName");
+                    let price_field = document.getElementById("ProductPriceInBytes");
+                    let size_field = document.getElementById("ProductSizeInBytes");
+                    let description = document.getElementById("ProductDescription");
+
                     let form = new FormData();
                     form.append('name', this.name);
                     form.append('size', this.size);
                     form.append('price', this.price);
                     form.append('description', this.description);
+
+                    if(title_field.value.length === 0){
+                        title_field.style.border = "1px solid #d50000";
+                        return;
+                    }
+                    else if(size_field.value.length === 0){
+                        title_field.style.borderColor = "transparent";
+                        size_field.style.border = "1px solid #d50000";
+                        return;
+                    }
+                    else if(isNaN(price_field.value) === true || price_field.value.length === 0){
+                        size_field.style.borderColor = "transparent";
+                        price_field.style.border = "1px solid #d50000";
+                        return;
+                    }
+                     else if(description.value.length === 0){
+                        price_field.style.borderColor = "transparent";
+                        description.style.border ="1px solid #d50000";
+                        return;
+                     }
                     
                     let q = new AkanaXhr({
                         resource: '/products/',

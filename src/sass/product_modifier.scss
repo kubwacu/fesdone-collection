@@ -1,5 +1,8 @@
 @import 'main';
 
+input, textarea{
+    transition: 0.3s border ease-in-out;
+}
  .content{
      padding: 20px;
  }
