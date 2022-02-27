@@ -55,7 +55,7 @@
             </div> 
         </main>
         <div class="overlayer" id="overlayer">
-            <div class="overlayer__quit" id="overlayer_quit"><i class="fas fa-times"></i></div>
+            <div class="overlayer__quit" id="overlayer_quit" @click="hide_overlay"><i class="fas fa-times"></i></div>
             <div class="cover_crop">
                 <div class="cover_crop__preview" id="cover_demo"></div>
                 <div class="cover_crop__button button_section"><button class="button" id="cover_save_button">Ajouter</button></div>
@@ -71,7 +71,7 @@
                 name: null,
                 size: null,
                 price: null,
-                description: null
+                description: null,
             },
             methods: {
                 save: function(){
@@ -122,6 +122,10 @@
                         }
                     });
                 },
+                hide_overlay: function(){
+                    console.log("hide overlay");
+                    document.getElementById("overlayer").style.display="none";
+                }
             }
         })
     </script>

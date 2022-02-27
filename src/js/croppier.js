@@ -4,11 +4,8 @@ var overlayer_quit = $('#overlayer_quit'),
 	cover_loading = $('#cover_loading'),
 	cover_preview_message = $('#cover_preview_message'),
 	cover_input = $("#article_cover");
-   
 
-function hide_overlayer(){
-    overlayer.css({'display':'none'})
-}
+let bt_quit = document.getElementById("overlayer_quit");
 
 function show_cover_loading(){
 	cover_loading.css({'display':'block'})
@@ -17,19 +14,17 @@ function hide_cover_loading(){
 	cover_loading.css({'display':'none'})
 }
 
-overlayer_quit.on('click', hide_overlayer);
-
 $(document).ready(function(){
 
     $image_crop = $('#cover_demo').croppie({
 		viewport:{
-			width :500,
-			height:500,
+			width :300,
+			height:300,
 			type:'square'
 		},
 		boundary:{
-			width:800,
-			height:600
+			width:400,
+			height:500
 		},
 		enforceBoundary: true,
 		enableOrientation: true

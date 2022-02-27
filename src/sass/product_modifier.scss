@@ -122,12 +122,10 @@ form{
         margin:30px;
         text-align: right;
         font-size: 1.2em;
-        
         cursor:pointer;
 
         i{
-
-            background-color: rgba(0,0,0,0.4);
+            background-color: #d60000;
             border-radius:50%;
             padding:10px 13px;
 
@@ -136,6 +134,14 @@ form{
             }
         }
 
+    }
+    .button_section{
+        margin-top: -20px;
+        text-align: center;
+    
+        .button{
+            margin: 0 20px;
+        }
     }
 }
 
