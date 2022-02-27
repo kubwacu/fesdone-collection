@@ -44,6 +44,9 @@ $(document).ready(function(){
 	});
 
 	$('#cover_save_button').on('click', function(){
+		// document.getElementById("overlayer").style.display = "none";
+		// document.querySelector(".modal__container").style.display = "block";
+
 		$image_crop.croppie('result', {
 			type:'canvas',
 			size:'viewport'
@@ -58,6 +61,7 @@ $(document).ready(function(){
 				headers: new Map([["Authorization", "Token " + AkanaCookie.get('tkn')]])
 			}).run().then(function(result){
 				if(result.status == 200){
+					// document.querySelector(".modal__container").style.display = "none";
 					console.log("image uploaded.")
 				}
 				else{
