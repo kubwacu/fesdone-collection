@@ -65,7 +65,8 @@ $(document).ready(function(){
 					document.getElementById("overlayer").style.display = "none";
 					document.querySelector("#imagePreview img").src = result["content"]["file_name"];
 					document.querySelector("#imagePreview img").style.display = "block";
-					document.getElementById("product_cover").value = result["content"]["file_name"];
+					
+					AkanaCookie.set("uploading_image", result["content"]["file_name"])
 				}
 				else{
 					console.log("image not uploaded.")

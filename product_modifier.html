@@ -35,7 +35,6 @@
                     <label for="file_input"><i class="fas fa-camera product__cover_btn"></i></label>
                 </div>
                 <div class="form">
-                    <input v-model="cover" type="text" id="product_cover" style="display: none;">
                     <label for="">Product title</label>
                     <input v-model="name" class="name" id="ProductName" type="text" placeholder="Enter the product title" maxlength="50"/>
 
@@ -70,7 +69,6 @@
         const app = new Vue({
             el: '#app',
             data: {
-                cover: null,
                 name: null,
                 size: null,
                 price: null,
@@ -82,20 +80,19 @@
                     let price_field = document.getElementById("ProductPriceInBytes");
                     let size_field = document.getElementById("ProductSizeInBytes");
                     let description = document.getElementById("ProductDescription");
-                    let cover = document.getElementById("product_cover");
+                    
 
                     let form = new FormData();
-                    form.append('cover', this.name);
                     form.append('name', this.name);
                     form.append('size', this.size);
                     form.append('price', this.price);
                     form.append('description', this.description);
                     
-                    if(cover.value.length === 0){
-                        document.querySelector(".product__cover").style.border = "2px solid #d50000";
+                    if(AkanaCookie.get("uploading_image") === null){
+                        document.querySelector(".product__cover").style.border = "1px solid #d50000";
                         return;
                     }
-
+                   
                     if(title_field.value.length === 0){
                         document.querySelector(".product__cover").style.borderColor = "transparent";
                         title_field.style.border = "1px solid #d50000";
@@ -125,6 +122,7 @@
                         ["Authorization", "Token " + AkanaCookie.get('tkn')]
                     ])
                     }).run().then(function(result){
+                        AkanaCookie.delete("uploading_image");
                         if(result.status == 200){
                             window.location.replace('/products.html');
                         }
