@@ -13,9 +13,9 @@
     <script src="lib/vue.js"></script>
     <script src="src/js/akana.js"></script>
     <script src="src/js/check_user.js"></script>
+    <script src="lib/jquery.js"></script>
     <script src="lib/croppie.min.js"></script>
     <link rel="stylesheet" href="lib/croppie.css">
-    <script src="lib/jquery.js"></script>
     <title>Edit product - Fesdone collection</title>
 </head>
 <body>
@@ -30,22 +30,22 @@
                     
                     <div  class="product__cover" id="imagePreview" ><i class="fas fa-image"></i></div>
                     <form enctype="multipart/form-data">
-                        <input type="file" class="file_input" id="file_input" onchange="return fileValidation()">
+                        <input type="file" class="file_input" id="file_input">
                     </form>
                     <label for="file_input"><i class="fas fa-camera product__cover_btn"></i></label>
                 </div>
                 <div class="form">
-                    <label for="" asp-for="ProductName" >Product title</label>
-                    <input v-model="name" class="name" asp-for="ProductName" id="ProductName" type="text" placeholder="Enter the product title" maxlength="50"/>
+                    <label for="">Product title</label>
+                    <input v-model="name" class="name" id="ProductName" type="text" placeholder="Enter the product title" maxlength="50"/>
 
-                    <label for="" asp-for="ProductSizeInBytes" >Size of the product</label>
-                    <input v-model="size" class="name" asp-for="ProductSizeInBytes" id="ProductSizeInBytes" type="text" placeholder="Enter the size of tha product" maxlength="11"/>
+                    <label for="">Size of the product</label>
+                    <input v-model="size" class="name" id="ProductSizeInBytes" type="text" placeholder="Enter the size of tha product" maxlength="11"/>
 
-                    <label for="" asp-for="ProductPriceInBytes" >Price of the product</label>
-                    <input v-model="price" class="name" asp-for="ProductPriceInBytes" id="ProductPriceInBytes" type="text" placeholder="How much this product cost?" maxlength="11"/>
+                    <label for="">Price of the product</label>
+                    <input v-model="price" class="name" id="ProductPriceInBytes" type="text" placeholder="How much this product cost?" maxlength="11"/>
 
                     <label for="" asp-for="ProductDescription" >Description of the product</label>
-                    <textarea v-model="description" class="information" asp-for="ProductDescription" id="ProductDescription"
+                    <textarea v-model="description" class="information" id="ProductDescription"
                         placeholder="Entrer more detail about the product"></textarea>
                 </div>
                 <div class="button_section">
@@ -58,11 +58,12 @@
             <div class="overlayer__quit" id="overlayer_quit"><i class="fas fa-times"></i></div>
             <div class="cover_crop">
                 <div class="cover_crop__preview" id="cover_demo"></div>
-                <div class="cover_crop__button"><button class="button-1" id="cover_save_button">Ajouter</button></div>
+                <div class="cover_crop__button button_section"><button class="button" id="cover_save_button">Ajouter</button></div>
             </div>
         </div>
     </div>
     <script src="src/components/header.js"></script>
+    <script src="/src/js/croppier.js"></script>
     <script>
         const app = new Vue({
             el: '#app',
@@ -121,93 +122,8 @@
                         }
                     });
                 },
-                
             }
         })
     </script>
-<<<<<<< HEAD
-    <script>
-        var overlayer_quit = $('#overlayer_quit'),
-	overlayer = $('#overlayer'),
-	cover = $('#cover_preview'),
-	cover_loading = $('#cover_loading'),
-	cover_preview_message = $('#cover_preview_message'),
-	cover_input = $("#article_cover");
-   
-
-function hide_overlayer(){
-    overlayer.css({'display':'none'})
-}
-function show_overlayer(){
-    overlayer.css({'display':'block'})
-}
-function show_cover_loading(){
-	cover_loading.css({'display':'block'})
-}
-function hide_cover_loading(){
-	cover_loading.css({'display':'none'})
-}
-
-overlayer_quit.on('click', hide_overlayer);
-
-$(document).ready(function(){
-
-    $image_crop = $('#cover_demo').croppie({
-		enableExif:true,
-		viewport:{
-			width :780,
-			height:460,
-			type:'square'
-		},
-		boundary:{
-			width:800,
-			height:560
-		},
-    });
-    
-    $('#cover').on('change', function(){
-		var reader = new FileReader();
-		reader.onload = function(event){
-			$image_crop.croppie('bind',{
-				url:event.target.result
-			}).then(function(){
-				console.log('Jquery bind complete');
-			});
-		}
-		reader.readAsDataURL(this.files[0]);
-		show_overlayer();
-	});
-
-	$('#cover_save_button').on('click', function(){
-		$image_crop.croppie('result', {
-			type:'canvas',
-			size:'viewport'
-		}).then(function(response){
-			hide_overlayer();
-			show_cover_loading();
-			$.ajax({
-				url: '/admin/save_cover',
-				type: 'POST',
-				data: {'cover': response},
-				success: function(image_name){
-					hide_cover_loading();
-					cover.css({
-						'background':'rgba(0,160,230,0.4)',
-						'color':'#212121'
-					});
-					cover_preview_message.html("La couverture de l'article a été ajoutée");
-					cover_input.val(image_name);
-				}
-			})
-		})
-	});
-})
-
-
-    </script>
-=======
-    <script src="src/js/crop.js"></script>
-    <script src="src/js/file_input.js"></script>
->>>>>>> ac6dc6b04bbe8109d97b71d9a869c0f6f7741ff4
 </body>
 </html>

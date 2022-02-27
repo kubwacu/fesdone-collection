@@ -9,9 +9,7 @@ var overlayer_quit = $('#overlayer_quit'),
 function hide_overlayer(){
     overlayer.css({'display':'none'})
 }
-function show_overlayer(){
-    overlayer.css({'display':'block'})
-}
+
 function show_cover_loading(){
 	cover_loading.css({'display':'block'})
 }
@@ -24,19 +22,20 @@ overlayer_quit.on('click', hide_overlayer);
 $(document).ready(function(){
 
     $image_crop = $('#cover_demo').croppie({
-		enableExif:true,
 		viewport:{
-			width :780,
-			height:460,
+			width :500,
+			height:500,
 			type:'square'
 		},
 		boundary:{
 			width:800,
-			height:560
+			height:600
 		},
+		enforceBoundary: true,
+		enableOrientation: true
     });
     
-    $('#cover').on('change', function(){
+    $('#file_input').on('change', function(){
 		var reader = new FileReader();
 		reader.onload = function(event){
 			$image_crop.croppie('bind',{
@@ -46,7 +45,7 @@ $(document).ready(function(){
 			});
 		}
 		reader.readAsDataURL(this.files[0]);
-		show_overlayer();
+		document.getElementById("overlayer").style.display = "block";
 	});
 
 	$('#cover_save_button').on('click', function(){
@@ -56,20 +55,20 @@ $(document).ready(function(){
 		}).then(function(response){
 			hide_overlayer();
 			show_cover_loading();
-			$.ajax({
-				url: '/admin/save_cover',
-				type: 'POST',
-				data: {'cover': response},
-				success: function(image_name){
-					hide_cover_loading();
-					cover.css({
-						'background':'rgba(0,160,230,0.4)',
-						'color':'#212121'
-					});
-					cover_preview_message.html("La couverture de l'article a été ajoutée");
-					cover_input.val(image_name);
-				}
-			})
+			// $.ajax({
+			// 	url: '/admin/save_cover',
+			// 	type: 'POST',
+			// 	data: {'cover': response},
+			// 	success: function(image_name){
+			// 		hide_cover_loading();
+			// 		cover.css({
+			// 			'background':'rgba(0,160,230,0.4)',
+			// 			'color':'#212121'
+			// 		});
+			// 		cover_preview_message.html("La couverture de l'article a été ajoutée");
+			// 		cover_input.val(image_name);
+			// 	}
+			// })
 		})
 	});
 })
