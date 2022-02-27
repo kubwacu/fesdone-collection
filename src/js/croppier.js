@@ -48,8 +48,22 @@ $(document).ready(function(){
 			type:'canvas',
 			size:'viewport'
 		}).then(function(response){
-			hide_overlayer();
-			show_cover_loading();
+			let form_data = new FormData();
+            form_data.append('cover', response);
+			
+			let q = new AkanaXhr({
+				resource: '/products/uploadcover',
+				method: 'post',
+				data: form_data,
+				headers: new Map([["Authorization", "Token " + AkanaCookie.get('tkn')]])
+			}).run().then(function(result){
+				if(result.status == 200){
+					console.log("image uploaded.")
+				}
+				else{
+					console.log("image not uploaded.")
+				}
+			});
 			// $.ajax({
 			// 	url: '/admin/save_cover',
 			// 	type: 'POST',

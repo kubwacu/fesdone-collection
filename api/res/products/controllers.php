@@ -22,3 +22,27 @@
             return new Response($serializer['data'], STATUS_200_OK);
         }
     }
+
+    class ProductCoverController{
+        static function post(){
+            
+            $binary_data = REQUEST["data"]["cover"];
+            list($type, $image) = explode(';',$binary_data);
+			list(, $image) = explode(',',$image);
+			$image = base64_decode($image);
+			$image_name = time().'.png';
+			$image_rep = "../src/data/".$image_name;
+            file_put_contents($image_rep, $image);
+
+            return new Response(["file_name" => $image_rep]);
+                
+            // $cover = imagecreatefrompng($image_rep); 
+			// $mini_cover = imagecreatetruecolor(120, 120);
+			// $width_cover = imagesx($cover);
+			// $height_cover = imagesy($cover);
+			// $width_miniCover = imagesx($mini_cover);
+			// $height_miniCover = imagesy($mini_cover);
+			// imagecopyresampled($mini_cover,$cover,0,0,0,0,$width_miniCover,$height_miniCover,$width_cover,$height_cover);
+            // imagepng($mini_cover, 'article/cover/miniature/'.$image_name);
+        }
+    }
