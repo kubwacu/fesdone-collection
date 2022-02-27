@@ -16,6 +16,11 @@ input, textarea{
         background-color: #ccc;
         border-radius: 50%;
         margin: auto;
+        overflow: hidden;
+
+        img{
+            display: none;
+        }
 
         i{
             position: relative;
