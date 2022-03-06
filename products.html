@@ -37,8 +37,8 @@
                    <tbody>
                         <tr v-for="product in products"> 
                             <td><div class="image"><img v-bind:src="product.image"></div></td>
-                            <td><a href="product.html">{{ product.name }}</a></td>
-                            <td>{{ product.price }} fbu</td>
+                            <td><a v-bind:href="'product.html?id=' + product.pk">{{ product.name }}</a></td>
+                            <td>{{ product.price }} Fbu</td>
                             <td class="action">
                                 <a href="product_modifier.html" class="action--edit" title="Edit product"><i class="fas fa-edit"></i></a>
                                 <a href="http://" class="action--delete" title="Delete product"><i class="fas fa-trash-alt"></i></a>

@@ -22,6 +22,14 @@
             return new Response($serializer['data'], STATUS_200_OK);
         }
     }
+    class ProductController{
+        static function get($id){
+            $data = Product::get($id);
+            $serializer = ProductSerializer::serialize($data);
+
+            return new Response($serializer['data'], STATUS_200_OK);
+        }
+    }
 
     class ProductCoverController{
         static function post(){

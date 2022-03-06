@@ -25,9 +25,9 @@
             <div class="content">
                 <div class="product">
                     <div class="product__main_info">
-                        <div class="product__cover"></div>
+                        <div class="product__cover"><img v-bind:src="product.image"></div>
                         <div class="product__product">
-                            <h2>T-shirt type yoko</h2>
+                            <h2>{{ product.name }}</h2>
                         </div>
                     </div>
                     <ul class="product__details">
@@ -35,7 +35,7 @@
                         <li><span class="detail_label">Size</span><span class="detail">: XXL</span></li>
                         <br>
                         <li><span class="detail_label">added at</span><span class="detail">: 10/09/2021 18:21</span></li>
-                        <li><span class="detail_label">Price</span><span class="detail">: 25 000 FBU</span></li>
+                        <li><span class="detail_label">Price</span><span class="detail">: {{ product.price }} FBU</span></li>
                     </ul>
                 </div>
                 <div class="button_section">
@@ -49,8 +49,28 @@
 
     <script src="src/components/header.js"></script>
     <script>
-        const app = new Vue({
-            el: '#app'
+       const app = new Vue({
+            el: '#app',
+            data: {
+                product: []
+            },
+            created(){
+                get_url_param = function(x) {
+                    let url_params = new URLSearchParams(window.location.search);
+                    return url_params.get(x);
+                }
+                
+                let q = new AkanaXhr({
+                    method: 'get',
+                    resource: '/products/' + get_url_param("id"),
+                    headers: new Map([
+                        ["Authorization", "Token " + AkanaCookie.get('tkn')]
+                    ])
+                }).run().then(function(result){
+                    app.product = result.content;
+                });
+            }
+            
         })
     </script>
 </body>
