@@ -50,7 +50,7 @@
                 </div>
                 <div class="button_section">
                     <button class="button" @click="save">Save</button>
-                    <button class="button button--delete">Cancel</button>
+                    <button class="button button__delete" @click="cancel">Cancel</button>
                 </div>
             </div> 
         </main>
@@ -58,7 +58,7 @@
             <div class="overlayer__quit" id="overlayer_quit" @click="hide_overlay"><i class="fas fa-times"></i></div>
             <div class="cover_crop">
                 <div class="cover_crop__preview" id="cover_demo"></div>
-                <div class="cover_crop__button button_section"><button class="button" id="cover_save_button">Ajouter</button></div>
+                <div class="cover_crop__button button_section"><button class="button" id="cover_save_button">Add Image</button></div>
             </div>
         </div>
     </div>
@@ -80,13 +80,6 @@
                     let price_field = document.getElementById("ProductPriceInBytes");
                     let size_field = document.getElementById("ProductSizeInBytes");
                     let description = document.getElementById("ProductDescription");
-                    
-
-                    let form = new FormData();
-                    form.append('name', this.name);
-                    form.append('size', this.size);
-                    form.append('price', this.price);
-                    form.append('description', this.description);
                     
                     if(AkanaCookie.get("uploading_image") === null){
                         document.querySelector(".product__cover").style.border = "1px solid #d50000";
@@ -113,7 +106,15 @@
                         description.style.border ="1px solid #d50000";
                         return;
                     }
-                    
+
+                    let form = new FormData();
+                    form.append('name', this.name);
+                    form.append('size', this.size);
+                    form.append('price', this.price);
+                    form.append('description', this.description);
+                    form.append('image', AkanaCookie.get("uploading_image"));
+
+
                     let q = new AkanaXhr({
                         resource: '/products/',
                         method: 'post',

@@ -6,6 +6,7 @@
 
     class Product extends Model{
         public $name;
+        public $image;
         public $size;
         public $price;
         public $likes;
@@ -16,6 +17,7 @@
         public static $params = [
             'description' => ['type'=>'str', 'min_length'=> 30, 'max_length'=>100], 
             'name' => ['type'=>'str', 'min_length'=> 3, 'max_length'=>50],
+            'image' => ['type'=>'str', 'min_length'=> 3, 'max_length'=>255],
             'size' => ['type'=>'str', 'min_length'=> 3, 'max_length'=>50],
             'price' => ['type'=>'int'],
             'likes' => ['type'=>'int', 'nullable' => true],
