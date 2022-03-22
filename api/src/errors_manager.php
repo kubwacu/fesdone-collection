@@ -13,7 +13,7 @@
 
     // return;
 
-    $exception = explode('\\', get_class($e));
+    $exception = explode('\\', get_class($e))[0];
     $trace = $e->getTrace();
     $first_trace = $trace[0];
 

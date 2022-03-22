@@ -41,14 +41,22 @@
                             <td>{{ product.price }} Fbu</td>
                             <td class="action">
                                 <a href="product_modifier.html" class="action--edit" title="Edit product"><i class="fas fa-edit"></i></a>
-                                <a href="http://" class="action--delete" title="Delete product"><i class="fas fa-trash-alt"></i></a>
+                                <span class="action--delete"  @click="pre_delete_product(product.pk)" title="Delete product"><i class="fas fa-trash-alt"></i></span>
                            </td>
                         </tr>
                    </tbody>     
                     </table>
                 </div>
         </main>
-
+        <div class="overlay" v-show="show_overlay">
+            <div class="dialog_container">
+                <p>Vous etes sur de vouloir supprimer cet element?</p>
+                <ul>
+                    <li class="no" @click="show_overlay = false">No</li>
+                    <li class="yes" @click="delete_product">Yes</li>
+                </ul>
+            </div>
+        </div>
 
 
     </div>
@@ -58,7 +66,31 @@
         const app = new Vue({
             el: '#app',
             data: {
+                show_overlay: false,
+                memo_id: null,
                 products: []
+            },
+            methods: {
+                delete_product(){
+                    let q = new AkanaXhr({
+                    method: 'delete',
+                    resource: '/products/' + this.memo_id + '/',
+                    headers: new Map([
+                        ["Authorization", "Token " + AkanaCookie.get('tkn')]
+                    ])
+                }).run().then(function(result){
+                    if(result.status == 200){
+                            window.location.replace('/products.html');
+                        }
+                        else{
+                            alert("Product not saved");
+                        }
+                }); 
+                },
+                pre_delete_product(id){
+                    this.memo_id = id;
+                    this.show_overlay = true;
+                }
             },
             created(){
                 let q = new AkanaXhr({

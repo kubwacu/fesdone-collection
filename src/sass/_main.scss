@@ -189,3 +189,48 @@ main{
 input, textarea{
     border-radius: 5px;
 }
+.overlay{
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    background-color: rgba($color: #000000, $alpha: 0.7);
+    height: 100vh;
+    width: 100vw;
+    transition: 0.3s display ease-in;
+}
+.dialog{
+    &_container{
+        background-color: #fff;
+        height: 150px;
+        width: 400px;
+        margin: 20% auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        border-radius: 5px;
+
+        ul{
+            display: flex;
+            justify-content: center;
+
+            li{
+                width: 100px;
+                margin: 20px;
+                height: 45px;
+                line-height: 40px;
+                border-radius: 5px;
+                text-align: center;
+                cursor: pointer;
+                color: #fff;
+
+                &.yes{
+                    background-color: $main_color;
+                }
+                &.no{
+                    background-color: #d50000;
+                }
+            }
+        }
+    }
+}

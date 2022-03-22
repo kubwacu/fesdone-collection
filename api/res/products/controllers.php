@@ -27,7 +27,13 @@
             $data = Product::get($id);
             $serializer = ProductSerializer::serialize($data);
 
-            return new Response($serializer['data'], STATUS_200_OK);
+            return new Response($serializer['data'], STATUS_200_OK); 
+        }
+        static function delete($id){
+            $data = Product::get($id);
+            $data->delete();
+
+            return new Response(["message"=> "product deleted"], STATUS_200_OK); 
         }
     }
 

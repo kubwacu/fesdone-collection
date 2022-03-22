@@ -8,8 +8,10 @@
 
     &--edit, &--edit:hover{
         color: #1565c0;
+        cursor: pointer;
     }
     &--delete, &--delete:hover{
         color: #d50000;
+        cursor: pointer
     }
 }

@@ -20,7 +20,7 @@
         <c-header></c-header>
         <main>
             <div class="header">
-                <h1>Product number: 13</h1>
+                <h1>Product number: {{product.pk}}</h1>
             </div>
             <div class="content">
                 <div class="product">
@@ -31,20 +31,31 @@
                         </div>
                     </div>
                     <ul class="product__details">
-                        <li><span class="detail_label">Color</span><span class="detail">: <span style="color: #1565c0">#1565c0</span> </span></li>
-                        <li><span class="detail_label">Size</span><span class="detail">: XXL</span></li>
+                        <li><h3>Description</h3></li>
+                        <li class="description">{{ product.description }}</li>
+                        <li><span class="detail_label">Size</span><span class="detail">: {{ product.size }}</span></li>
                         <br>
-                        <li><span class="detail_label">added at</span><span class="detail">: 10/09/2021 18:21</span></li>
+                        <li><span class="detail_label">added at</span><span class="detail">: {{ product.created_at }}</span></li>
                         <li><span class="detail_label">Price</span><span class="detail">: {{ product.price }} FBU</span></li>
                     </ul>
                 </div>
                 <div class="button_section">
-                    <button class="button button--delete"><i class="fas fa-trash-alt"></i> Delete</button>
+                    <button class="button button--delete" @click="show_overlay = true"><i class="fas fa-trash-alt"></i> Delete</button>
                     <a class="button" href="product_modifier.html"><i class="fas fa-edit"></i> Edit</a>
                 </div>
              
             </div>
         </main>
+
+        <div class="overlay" v-show="show_overlay">
+            <div class="dialog_container">
+                <p>Vous etes sur de vouloir supprimer cet element?</p>
+                <ul>
+                    <li class="no" @click="show_overlay = false">No</li>
+                    <li class="yes" @click="delete_product">Yes</li>
+                </ul>
+            </div>
+        </div>
     </div>
 
     <script src="src/components/header.js"></script>
@@ -52,7 +63,26 @@
        const app = new Vue({
             el: '#app',
             data: {
+                show_overlay: false,
                 product: []
+            },
+            methods: {
+                delete_product(){
+                    let q = new AkanaXhr({
+                    method: 'delete',
+                    resource: '/products/' + get_url_param("id") + '/',
+                    headers: new Map([
+                        ["Authorization", "Token " + AkanaCookie.get('tkn')]
+                    ])
+                }).run().then(function(result){
+                    if(result.status == 200){
+                            window.location.replace('/products.html');
+                        }
+                        else{
+                            alert("Product not saved");
+                        }
+                }); 
+                }
             },
             created(){
                 get_url_param = function(x) {
@@ -62,7 +92,7 @@
                 
                 let q = new AkanaXhr({
                     method: 'get',
-                    resource: '/products/' + get_url_param("id"),
+                    resource: '/products/' + get_url_param("id") + '/',
                     headers: new Map([
                         ["Authorization", "Token " + AkanaCookie.get('tkn')]
                     ])

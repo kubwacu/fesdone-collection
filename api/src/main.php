@@ -61,6 +61,7 @@
                         $endpoint = URI::extract_endpoint($resource, $uri); 
                         $endpoint_details = Endpoint::details($resource, $endpoint);
                         $controller = empty($endpoint_details) ? "" : '\\'.$resource.'\\Controllers\\'.$endpoint_details['controller'];
+                        
                         $auth_state = $endpoint_details["auth_state"];
 
                         if(is_bool($auth_state)) $auth_state = [HTTP_VERB => $auth_state];
