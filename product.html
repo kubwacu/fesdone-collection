@@ -41,7 +41,7 @@
                 </div>
                 <div class="button_section">
                     <button class="button button--delete" @click="show_overlay = true"><i class="fas fa-trash-alt"></i> Delete</button>
-                    <a class="button" href="product_modifier.html"><i class="fas fa-edit"></i> Edit</a>
+                    <a class="button" v-bind:href="'product_modifier.html?id=' + product.pk" title="Edit product"><i class="fas fa-edit"></i> Edit</a>
                 </div>
              
             </div>

@@ -40,7 +40,7 @@
                             <td><a v-bind:href="'product.html?id=' + product.pk">{{ product.name }}</a></td>
                             <td>{{ product.price }} Fbu</td>
                             <td class="action">
-                                <a href="product_modifier.html" class="action--edit" title="Edit product"><i class="fas fa-edit"></i></a>
+                                <a v-bind:href="'product_modifier.html?id=' + product.pk" class="action--edit" title="Edit product"><i class="fas fa-edit"></i></a>
                                 <span class="action--delete"  @click="pre_delete_product(product.pk)" title="Delete product"><i class="fas fa-trash-alt"></i></span>
                            </td>
                         </tr>

@@ -11,5 +11,5 @@
     $BRIDGE_URI = $_GET['resource'];
     $SERVER_COPY = $_SERVER;
     $BRIDGE_DATA = json_encode($_POST);
-   
+
     require 'start/index.php';

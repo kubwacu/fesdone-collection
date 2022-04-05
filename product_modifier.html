@@ -69,10 +69,12 @@
         const app = new Vue({
             el: '#app',
             data: {
+                id: null,
                 name: null,
                 size: null,
                 price: null,
                 description: null,
+                id: null,
             },
             methods: {
                 save: function(){
@@ -114,15 +116,29 @@
                     form.append('description', this.description);
                     form.append('image', AkanaCookie.get("uploading_image"));
 
-
-                    let q = new AkanaXhr({
-                        resource: '/products/',
-                        method: 'post',
-                        data: form,
-                        headers: new Map([
-                        ["Authorization", "Token " + AkanaCookie.get('tkn')]
-                    ])
-                    }).run().then(function(result){
+                    let q = null;
+                    if(this.id !== null){
+                        q = new AkanaXhr({
+                            resource: '/products/' + this.id + '/',
+                            method: 'put',
+                            data: form,
+                            headers: new Map([
+                                ["Authorization", "Token " + AkanaCookie.get('tkn')]
+                            ])
+                        });
+                    }
+                    else{
+                        q = new AkanaXhr({
+                            resource: '/products/',
+                            method: 'post',
+                            data: form,
+                            headers: new Map([
+                                ["Authorization", "Token " + AkanaCookie.get('tkn')]
+                            ])
+                        });
+                    }
+                    
+                    q.run().then(function(result){
                         AkanaCookie.delete("uploading_image");
                         if(result.status == 200){
                             window.location.replace('/products.html');
@@ -135,6 +151,34 @@
                 hide_overlay: function(){
                     console.log("hide overlay");
                     document.getElementById("overlayer").style.display="none";
+                }
+            },
+            created() {
+                get_url_param = function(x) {
+                    let url_params = new URLSearchParams(window.location.search);
+                    return url_params.get(x);
+                };
+
+                let id = get_url_param("id");
+
+                if(id){
+                    let q = new AkanaXhr({
+                        method: 'get',
+                        resource: '/products/' + id + '/',
+                        headers: new Map([
+                            ["Authorization", "Token " + AkanaCookie.get('tkn')]
+                    ])
+                    }).run().then(function(result){
+                        let product = result.content;
+                        app.name = product.name;
+                        app.size = product.size;
+                        app.price = product.price;
+                        app.description = product.description;
+                        app.id = id;
+                        document.querySelector("#imagePreview img").src = product.image;
+                        document.querySelector("#imagePreview img").style.display = "block";
+                        AkanaCookie.set("uploading_image", product.image);
+                    });
                 }
             }
         })

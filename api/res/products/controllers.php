@@ -5,6 +5,7 @@
     require API_ROOT.'/res/products/serializers.php';
 
     use Akana\Response;
+    use Akana\Utils;
     use products\Models\Product;
     use products\Serializers\ProductSerializer;
 
@@ -34,6 +35,19 @@
             $data->delete();
 
             return new Response(["message"=> "product deleted"], STATUS_200_OK); 
+        }
+        static function put($id){
+            $data = Product::get($id);
+
+            $data->update([
+                "name" => Utils::PUT("name"),
+                "size" => Utils::PUT("size"),
+                "price" => Utils::PUT("price"),
+                "description" => Utils::PUT("description"),
+                "image" => Utils::PUT("image"),
+            ]);
+            $serializer = ProductSerializer::serialize($data);
+            return new Response($serializer['data'], STATUS_200_OK); 
         }
     }
 
