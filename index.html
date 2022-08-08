@@ -72,11 +72,8 @@
                     form.append('username', this.username);
                     form.append('password', this.password);
                     
-                    let q = new AkanaXhr({
-                        resource: '/users/login/',
-                        method: 'post',
-                        data: form
-                    }).run().then(function(result){
+                    let q = new AkanaClient({method: 'post', resource: '/users/login/', data: form})
+                    .run().then(function(result){
                         modal.style.display = "none";
 
                         if(result.status == 400){

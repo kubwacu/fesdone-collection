@@ -10,6 +10,7 @@ Vue.component('c-header', {
                 <span class="message_counter">9+</span>
             </li>
             <li><a href="products.html">Products</a></li>
+            <li><a href="users.html">Users</a></li>
         </ul>
         <div class="actions">
             <span @click="logout" class="logout_btn"><i class="fas fa-door-open"></i> Log out</span>

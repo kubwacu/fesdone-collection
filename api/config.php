@@ -23,4 +23,10 @@
         'port'      => DATABASE_PORT,
         'name'      => DATABASE_NAME,
         'login'     => DATABASE_LOGIN,
-        'password'  => DATABASE_PASSWORD]);
+        'password'  => DATABASE_PASSWORD
+    ]);
+    // define('ALLOW_ORGINS', 'ALL');
+    define('ALLOW_ORGINS', [
+        'http://127.0.0.1'
+    ]);
+    

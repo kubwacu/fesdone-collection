@@ -12,11 +12,7 @@
     // login/
     class LoginController{
         static public function post(){
-            
             $user_auth = Utils::get_auth_user();
-            if($user_auth){
-                echo "your are connected";
-            }
             return new Response(["token" => User::authenticate()]);
         }
     }

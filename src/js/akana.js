@@ -3,14 +3,9 @@
     Last update: 25/12/2021
 */
 
-
-class Akana{
-    static bridge(url){
-        return "/api/api.php?resource=" + url;
-    }
-}
-
-class AkanaXhr{
+class AkanaClient{
+    static #BASE_URL = "http://127.0.0.1:5000";
+    
     constructor(params){
         this.method = params.method;
         this.query_params = params.query_params;
@@ -33,7 +28,7 @@ class AkanaXhr{
                 success(result);
             };
             xhr.onerror = failed;
-            xhr.open(method, "/api/api.php?resource=" + resource);
+            xhr.open(method, AkanaClient.#BASE_URL + resource);
 
             if(headers !== undefined){
                 headers.forEach(function(value, key) {

@@ -7,12 +7,8 @@
     * @author (kalculata) Huzaifa Nimushimirimana <nprincehuzaifa@gmail.com>
     *
     */
-    if(isset($BRIDGE)){
-        define('API_ROOT', $BRIDGE);
-    }
-    else{
-        define('API_ROOT', '..');
-    }
+ 
+    define('API_ROOT', '..');
 
     require API_ROOT.'/config.php';
     require API_ROOT.'/src/status.php';  
@@ -29,32 +25,29 @@
     use Akana\Main;
     use Akana\Utils;
 
+    define('URI',  $_SERVER['REQUEST_URI']);
+    define('HTTP_VERB', strtolower($_SERVER['REQUEST_METHOD']));
+    define('REQUEST', ['data'=>Utils::get_request_data()]);
     
-    if(isset($BRIDGE)){
-        define('URI',  $BRIDGE_URI);
-        define('HTTP_VERB', strtolower($SERVER_COPY['REQUEST_METHOD']));
-        define('REQUEST', ['data'=>json_decode($BRIDGE_DATA, true)]);
-            
-        if(isset($SERVER_COPY['HTTP_AUTHORIZATION'])){
-            define('AUTH_USER_TOKEN', $SERVER_COPY['HTTP_AUTHORIZATION']);
-        }
-        else{
-            define('AUTH_USER_TOKEN', "");
-        }
+    
+    if(isset($_SERVER['HTTP_AUTHORIZATION'])){
+        define('AUTH_USER_TOKEN', $_SERVER['HTTP_AUTHORIZATION']);
     }
     else{
-        define('URI',  $_SERVER['REQUEST_URI']);
-        define('HTTP_VERB', strtolower($_SERVER['REQUEST_METHOD']));
-        define('REQUEST', ['data'=>Utils::get_request_data()]);
-    
-        if(isset($_SERVER['HTTP_AUTHORIZATION'])){
-            define('AUTH_USER_TOKEN', $_SERVER['HTTP_AUTHORIZATION']);
-        }
-        else{
-            define('AUTH_USER_TOKEN', "");
-        }
+        define('AUTH_USER_TOKEN', "");
     }
-
+    
+    if(isset($_SERVER['HTTP_ORIGIN'])) {
+        $http_origin = $_SERVER['HTTP_ORIGIN'];
+        header("Access-Control-Allow-Origin: $http_origin");
+        
+        // if ($http_origin == "http://www.domain1.com" || 
+        //     $http_origin == "http://www.domain2.com" || 
+        //     $http_origin == "http://www.domain3.com") {  
+        //         header("Access-Control-Allow-Origin: $http_origin");
+        // }
+    }
+   
     function main(){
         try{
             set_error_handler([Utils::class, 'stop_error_handler']);

@@ -53,7 +53,6 @@
 
     class ProductCoverController{
         static function post(){
-            
             $binary_data = REQUEST["data"]["cover"];
             list($type, $image) = explode(';',$binary_data);
 			list(, $image) = explode(',',$image);
