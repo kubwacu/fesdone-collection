@@ -14,7 +14,7 @@
     <script src="src/js/akana.js"></script>
     <script>
         const tkn = AkanaCookie.get('tkn');
-        if(tkn != null) window.location.replace("/orders.html"); 
+        if(tkn != null) window.location.replace("/messages.html"); 
         let url = new URL(location.href);
         const r = url.searchParams.get('r');
         if(r != null && r == "0") {var msg = "You must authenticate yourself."};
@@ -84,7 +84,7 @@
                         }
                         else if(result.status == 200){
                             AkanaCookie.set("tkn", result.content['token'])
-                            window.location.replace("/orders.html"); 
+                            window.location.replace("/messages.html"); 
                         }
                     });
                 },

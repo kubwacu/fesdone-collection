@@ -1,2 +1,4 @@
 temp/
 /src/data/
+*.sh
+*.sql

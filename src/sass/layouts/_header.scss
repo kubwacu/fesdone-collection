@@ -8,6 +8,18 @@ header{
     font-size: 14px;
     margin-bottom: 50px;
 
+    .message_counter{
+        background-color: #d50000;
+        color: #fff;
+        padding: 3px 5px;
+        border-radius: 50%;
+        font-size: 12px;
+        font-weight: 800;
+        position: relative;
+        left: -5px;
+        top: 10px;
+    }
+
     .logo{
         height: 40px;
         width: 50px;
@@ -30,23 +42,6 @@ header{
     .actions{
         display: flex;
         align-items: center;
-
-        .messages_link{
-            i{
-                font-size: 25px;
-            }
-            .message_counter{
-                background-color: #d50000;
-                color: #fff;
-                padding: 3px 5px;
-                border-radius: 50%;
-                font-size: 12px;
-                font-weight: 800;
-                position: relative;
-                left: -10px;
-                top: 5px;
-            }
-        }
         .logout_btn{
             color: #fff;
             cursor: pointer;

@@ -1,6 +1,6 @@
 <?php
    define('ENDPOINTS', [
-      '/' => ['ProductsController'],
+      '/' => ['ProductsController', false],
       '/(id:int)/' => ['ProductController'],
       '/uploadcover/' => ['ProductCoverController']
    ]);
