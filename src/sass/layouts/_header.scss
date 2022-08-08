@@ -42,14 +42,15 @@ header{
     .actions{
         display: flex;
         align-items: center;
+
         .logout_btn{
-            color: #fff;
+            color: $second_color;
             cursor: pointer;
             margin: 0 30px;
             transition: 0.3s all;
 
             &:hover{
-                color: $second_color
+                border-bottom: 1px solid;
             }
         }
     }

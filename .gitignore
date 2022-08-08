@@ -2,3 +2,4 @@ temp/
 /src/data/
 *.sh
 *.sql
+src/css/*.css.map
