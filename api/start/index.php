@@ -37,17 +37,11 @@
         define('AUTH_USER_TOKEN', "");
     }
     
-    if(isset($_SERVER['HTTP_ORIGIN'])) {
-        $http_origin = $_SERVER['HTTP_ORIGIN'];
-        header("Access-Control-Allow-Origin: $http_origin");
-        
-        // if ($http_origin == "http://www.domain1.com" || 
-        //     $http_origin == "http://www.domain2.com" || 
-        //     $http_origin == "http://www.domain3.com") {  
-        //         header("Access-Control-Allow-Origin: $http_origin");
-        // }
-    }
-   
+    header('Access-Control-Allow-Origin: *');
+    header('Access-Control-Allow-Methods: *');
+    header('Access-Control-Allow-Credentials: true');
+    header('Access-Control-Allow-Headers: Content-Type, Authorization');
+
     function main(){
         try{
             set_error_handler([Utils::class, 'stop_error_handler']);

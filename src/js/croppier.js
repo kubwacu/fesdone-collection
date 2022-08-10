@@ -15,7 +15,6 @@ function hide_cover_loading(){
 }
 
 $(document).ready(function(){
-
     $image_crop = $('#cover_demo').croppie({
 		viewport:{
 			width :300,
@@ -53,39 +52,27 @@ $(document).ready(function(){
 			let form_data = new FormData();
             form_data.append('cover', response);
 			
-			let q = new AkanaXhr({
-				resource: '/products/uploadcover',
+			let q = new AkanaClient({
+				resource: '/product/uploadcover',
 				method: 'post',
 				data: form_data,
 				headers: new Map([["Authorization", "Token " + AkanaCookie.get('tkn')]])
 			}).run().then(function(result){
 				if(result.status == 200){
 
+					let image_url = "https://www.kubwacu.com/fesdone_collection-api/public" + result["content"]["file_name"];
+
 					document.querySelector(".modal__container").style.display = "none";
 					document.getElementById("overlayer").style.display = "none";
-					document.querySelector("#imagePreview img").src = result["content"]["file_name"];
+					document.querySelector("#imagePreview img").src = image_url;
 					document.querySelector("#imagePreview img").style.display = "block";
 					
-					AkanaCookie.set("uploading_image", result["content"]["file_name"])
+					AkanaCookie.set("uploading_image", image_url)
 				}
 				else{
 					console.log("image not uploaded.")
 				}
 			});
-			// $.ajax({
-			// 	url: '/admin/save_cover',
-			// 	type: 'POST',
-			// 	data: {'cover': response},
-			// 	success: function(image_name){
-			// 		hide_cover_loading();
-			// 		cover.css({
-			// 			'background':'rgba(0,160,230,0.4)',
-			// 			'color':'#212121'
-			// 		});
-			// 		cover_preview_message.html("La couverture de l'article a été ajoutée");
-			// 		cover_input.val(image_name);
-			// 	}
-			// })
 		})
 	});
 })

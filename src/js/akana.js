@@ -4,7 +4,7 @@
 */
 
 class AkanaClient{
-    static #BASE_URL = "http://127.0.0.1:5000";
+    static #BASE_URL = "https://www.kubwacu.com/fesdone_collection-api/public/?uri=";
     
     constructor(params){
         this.method = params.method;
@@ -22,6 +22,8 @@ class AkanaClient{
 
         return new Promise(function(success, failed) {
             let xhr = new XMLHttpRequest();
+
+            // xhr.setRequestHeader('Content-Type', 'text/plain');
 
             xhr.onloadend = function(){
                 let result = {content: JSON.parse(xhr.responseText), status: xhr.status}

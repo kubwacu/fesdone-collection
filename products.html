@@ -37,11 +37,11 @@
                    <tbody>
                         <tr v-for="product in products"> 
                             <td><div class="image"><img v-bind:src="product.image"></div></td>
-                            <td><a v-bind:href="'product.html?id=' + product.pk">{{ product.name }}</a></td>
+                            <td><a v-bind:href="'product.html?id=' + product.id">{{ product.name }}</a></td>
                             <td>{{ product.price }} Fbu</td>
                             <td class="action">
-                                <a v-bind:href="'product_modifier.html?id=' + product.pk" class="action--edit" title="Edit product"><i class="fas fa-edit"></i></a>
-                                <span class="action--delete"  @click="pre_delete_product(product.pk)" title="Delete product"><i class="fas fa-trash-alt"></i></span>
+                                <a v-bind:href="'product_modifier.html?id=' + product.id" class="action--edit" title="Edit product"><i class="fas fa-edit"></i></a>
+                                <span class="action--delete"  @click="pre_delete_product(product.id)" title="Delete product"><i class="fas fa-trash-alt"></i></span>
                            </td>
                         </tr>
                    </tbody>     
@@ -72,9 +72,9 @@
             },
             methods: {
                 delete_product(){
-                    let q = new AkanaXhr({
-                    method: 'delete',
-                    resource: '/products/' + this.memo_id + '/',
+                    let q = new AkanaClient({
+                    method: 'DELETE',
+                    resource: '/product/' + this.memo_id + '/',
                     headers: new Map([
                         ["Authorization", "Token " + AkanaCookie.get('tkn')]
                     ])
@@ -83,7 +83,7 @@
                             window.location.replace('/products.html');
                         }
                         else{
-                            alert("Product not saved");
+                            alert("Product not deleted");
                         }
                 }); 
                 },
@@ -93,9 +93,9 @@
                 }
             },
             created(){
-                let q = new AkanaXhr({
+                let q = new AkanaClient({
                     method: 'get',
-                    resource: '/products/',
+                    resource: '/product/',
                     headers: new Map([
                         ["Authorization", "Token " + AkanaCookie.get('tkn')]
                     ])

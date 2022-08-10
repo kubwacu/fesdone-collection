@@ -60,8 +60,8 @@
                 msg: msg,
                 is_loading: false,
                 is_error: false,
-                username: null,
-                password: null,
+                username: "admin",
+                password: "admin",
             },
             methods: {
                 submit: function(){
@@ -72,14 +72,14 @@
                     form.append('username', this.username);
                     form.append('password', this.password);
                     
-                    let q = new AkanaClient({method: 'post', resource: '/users/login/', data: form})
+                    let q = new AkanaClient({method: 'post', resource: '/login/', data: form})
                     .run().then(function(result){
                         modal.style.display = "none";
 
                         if(result.status == 400){
                             app.show_error_message(result.content['message']);
                         }
-                        else if(result.status == 200){
+                        else if(result.status == 202){
                             AkanaCookie.set("tkn", result.content['token'])
                             window.location.replace("/messages.html"); 
                         }

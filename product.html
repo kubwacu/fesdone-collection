@@ -90,9 +90,9 @@
                     return url_params.get(x);
                 }
                 
-                let q = new AkanaXhr({
+                let q = new AkanaClient({
                     method: 'get',
-                    resource: '/products/' + get_url_param("id") + '/',
+                    resource: '/product/' + get_url_param("id") + '/',
                     headers: new Map([
                         ["Authorization", "Token " + AkanaCookie.get('tkn')]
                     ])

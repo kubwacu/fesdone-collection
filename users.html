@@ -54,8 +54,8 @@
                 }
             },
             created(){
-                let q = new AkanaXhr({
-                    method: 'get',
+                let q = new AkanaClient({
+                    method: 'GET',
                     resource: '/users/',
                     headers: new Map([
                         ["Authorization", "Token " + AkanaCookie.get('tkn')]

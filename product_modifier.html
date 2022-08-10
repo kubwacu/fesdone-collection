@@ -118,8 +118,8 @@
 
                     let q = null;
                     if(this.id !== null){
-                        q = new AkanaXhr({
-                            resource: '/products/' + this.id + '/',
+                        q = new AkanaClient({
+                            resource: '/product/' + this.id + '/',
                             method: 'put',
                             data: form,
                             headers: new Map([
@@ -128,8 +128,8 @@
                         });
                     }
                     else{
-                        q = new AkanaXhr({
-                            resource: '/products/',
+                        q = new AkanaClient({
+                            resource: '/product/',
                             method: 'post',
                             data: form,
                             headers: new Map([
@@ -140,7 +140,7 @@
                     
                     q.run().then(function(result){
                         AkanaCookie.delete("uploading_image");
-                        if(result.status == 200){
+                        if(result.status == 201){
                             window.location.replace('/products.html');
                         }
                         else{
@@ -162,9 +162,9 @@
                 let id = get_url_param("id");
 
                 if(id){
-                    let q = new AkanaXhr({
+                    let q = new AkanaClient({
                         method: 'get',
-                        resource: '/products/' + id + '/',
+                        resource: '/product/' + id + '/',
                         headers: new Map([
                             ["Authorization", "Token " + AkanaCookie.get('tkn')]
                     ])
