@@ -49,22 +49,15 @@ $(document).ready(function(){
 			type:'canvas',
 			size:'viewport'
 		}).then(function(response){
-			let form_data = new FormData();
-            form_data.append('cover', response);
+			let form_data = {'cover': response};
 			
-			let q = new AkanaClient({
-				resource: '/product/uploadcover',
-				method: 'post',
-				data: form_data,
-				headers: new Map([["Authorization", "Token " + AkanaCookie.get('tkn')]])
-			}).run().then(function(result){
-				if(result.status == 200){
-
-					let image_url = "https://www.kubwacu.com/fesdone_collection-api/public" + result["content"]["file_name"];
+			axios.post(base_url + "/products/uploadcover/", form_data).then(response => {
+				if(response.status == 200){
+					let image_url = response.data["file_name"];
 
 					document.querySelector(".modal__container").style.display = "none";
 					document.getElementById("overlayer").style.display = "none";
-					document.querySelector("#imagePreview img").src = image_url;
+					document.querySelector("#imagePreview img").src = data_folder + image_url;
 					document.querySelector("#imagePreview img").style.display = "block";
 					
 					AkanaCookie.set("uploading_image", image_url)

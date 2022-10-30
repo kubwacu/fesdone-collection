@@ -12,10 +12,12 @@
     <link rel="icon" href="src/images/logo.png">
     <script src="lib/vue.js"></script>
     <script src="src/js/akana.js"></script>
+    <script src="src/js/constants.js"></script>
     <script src="src/js/check_user.js"></script>
     <script src="lib/jquery.js"></script>
     <script src="lib/croppie.min.js"></script>
     <link rel="stylesheet" href="lib/croppie.css">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <title>Edit product - Fesdone collection</title>
 </head>
 <body>
@@ -24,7 +26,7 @@
         <c-header></c-header>
         <main>
             <div class="header">
-                <h1>Add and Modify</h1>
+                <h1>Ajouter un nouveau produit</h1>
             </div>
             <div class="content">
                 <div class="product" >
@@ -35,21 +37,29 @@
                     <label for="file_input"><i class="fas fa-camera product__cover_btn"></i></label>
                 </div>
                 <div class="form">
-                    <label for="">Product title</label>
-                    <input v-model="name" class="name" id="ProductName" type="text" placeholder="Enter the product title" maxlength="50"/>
+                    <label for="">Nom</label>
+                    <input v-model="name" class="name" id="ProductName" type="text" placeholder="Entrer le nom du produit" maxlength="50"/>
+                    
+                    <label for="">Type</label>
+                    <select v-model="type" name="type" id="type">
+                        <option value="tshirt">T-shirt</option>
+                        <option value="shoes">Chaussures</option>
+                        <option value="glasse">Lunettes</option>
+                        <option value="watch">Montres</option>
+                    </select>
 
-                    <label for="">Size of the product</label>
-                    <input v-model="size" class="name" id="ProductSizeInBytes" type="text" placeholder="Enter the size of tha product" maxlength="11"/>
+                    <label for="">Taille</label>
+                    <input v-model="size" class="name" id="ProductSizeInBytes" type="text" placeholder="Entrer la taille du produit" maxlength="11"/>
 
-                    <label for="">Price of the product</label>
-                    <input v-model="price" class="name" id="ProductPriceInBytes" type="text" placeholder="How much this product cost?" maxlength="11"/>
+                    <label for="">Prix</label>
+                    <input v-model="price" class="name" id="ProductPriceInBytes" type="number" placeholder="Entrer le prix du produit" maxlength="11"/>
 
-                    <label for="" asp-for="ProductDescription" >Description of the product</label>
+                    <label for="" asp-for="ProductDescription" >Description</label>
                     <textarea v-model="description" class="information" id="ProductDescription"
-                        placeholder="Entrer more detail about the product"></textarea>
+                        placeholder="Entrer une description du produit"></textarea>
                 </div>
                 <div class="button_section">
-                    <button class="button" @click="save">Save</button>
+                    <button class="button" @click="save()">Save</button>
                     <a href="products.html" class="button button--delete">Cancel</a>
                 </div>
             </div> 
@@ -71,6 +81,7 @@
             data: {
                 id: null,
                 name: null,
+                type: null,
                 size: null,
                 price: null,
                 description: null,
@@ -82,71 +93,68 @@
                     let price_field = document.getElementById("ProductPriceInBytes");
                     let size_field = document.getElementById("ProductSizeInBytes");
                     let description = document.getElementById("ProductDescription");
+                    const error_border = "2px solid #d50000";
                     
                     if(AkanaCookie.get("uploading_image") === null){
-                        document.querySelector(".product__cover").style.border = "1px solid #d50000";
+                        document.querySelector(".product__cover").style.border = error_border;
                         return;
                     }
-                   
                     if(title_field.value.length === 0){
                         document.querySelector(".product__cover").style.borderColor = "transparent";
-                        title_field.style.border = "1px solid #d50000";
+                        title_field.style.border = error_border;
                         return;
                     }
                     else if(size_field.value.length === 0){
                         title_field.style.borderColor = "transparent";
-                        size_field.style.border = "1px solid #d50000";
+                        size_field.style.border = error_border;
                         return;
                     }
                     else if(isNaN(price_field.value) === true || price_field.value.length === 0){
                         size_field.style.borderColor = "transparent";
-                        price_field.style.border = "1px solid #d50000";
+                        price_field.style.border = error_border;
                         return;
                     }
                     else if(description.value.length === 0){
                         price_field.style.borderColor = "transparent";
-                        description.style.border ="1px solid #d50000";
+                        description.style.border = error_border;
                         return;
                     }
 
-                    let form = new FormData();
-                    form.append('name', this.name);
-                    form.append('size', this.size);
-                    form.append('price', this.price);
-                    form.append('description', this.description);
-                    form.append('image', AkanaCookie.get("uploading_image"));
 
-                    let q = null;
+                    let form = {
+                        "name": this.name,
+                        "type": this.type,
+                        "size": this.size,
+                        "price": this.price,
+                        "description": this.description,
+                        "image": AkanaCookie.get("uploading_image")
+                    };
+
+                    // to edit
                     if(this.id !== null){
-                        q = new AkanaClient({
-                            resource: '/product/' + this.id + '/',
-                            method: 'put',
-                            data: form,
-                            headers: new Map([
-                                ["Authorization", "Token " + AkanaCookie.get('tkn')]
-                            ])
-                        });
+                        axios.put(base_url + "/products/" + this.id + "/", form).then(response => {
+                            AkanaCookie.delete("uploading_image");
+                            if(response.status == 202){
+                                window.location.replace('/products.html');
+                            }
+                            else{
+                                alert("Product not saved");
+                            }
+                        });   
                     }
+
+                    // to post
                     else{
-                        q = new AkanaClient({
-                            resource: '/product/',
-                            method: 'post',
-                            data: form,
-                            headers: new Map([
-                                ["Authorization", "Token " + AkanaCookie.get('tkn')]
-                            ])
-                        });
+                        axios.post(base_url + "/products/", form).then(response => {
+                            AkanaCookie.delete("uploading_image");
+                            if(response.status == 201){
+                                window.location.replace('/products.html');
+                            }
+                            else{
+                                alert("Product not saved");
+                            }
+                        });   
                     }
-                    
-                    q.run().then(function(result){
-                        AkanaCookie.delete("uploading_image");
-                        if(result.status == 201){
-                            window.location.replace('/products.html');
-                        }
-                        else{
-                            alert("Product not saved");
-                        }
-                    });
                 },
                 hide_overlay: function(){
                     console.log("hide overlay");
@@ -162,20 +170,14 @@
                 let id = get_url_param("id");
 
                 if(id){
-                    let q = new AkanaClient({
-                        method: 'get',
-                        resource: '/product/' + id + '/',
-                        headers: new Map([
-                            ["Authorization", "Token " + AkanaCookie.get('tkn')]
-                    ])
-                    }).run().then(function(result){
-                        let product = result.content;
+                    axios.get(base_url + "/products/" + id + "/").then(response => {
+                        let product = response.data;
                         app.name = product.name;
                         app.size = product.size;
                         app.price = product.price;
                         app.description = product.description;
                         app.id = id;
-                        document.querySelector("#imagePreview img").src = product.image;
+                        document.querySelector("#imagePreview img").src = data_folder + product.image;
                         document.querySelector("#imagePreview img").style.display = "block";
                         AkanaCookie.set("uploading_image", product.image);
                     });

@@ -60,10 +60,14 @@ main{
     
     >.header{
         text-align: center;
-        text-transform: uppercase;
         font-weight: lighter;
         font-size: 18px;
         color: $black_color;
+
+        h1 {
+            font-size: 32px;
+            font-weight: 500;
+        }
     }
 
     .content{
@@ -121,6 +125,7 @@ main{
         background-color: #1565c0;
     }
 }
+
 .modal{
     &__container{
         position: fixed;
@@ -186,9 +191,11 @@ main{
 
     }
 }
+
 input, textarea{
     border-radius: 5px;
 }
+
 .overlay{
     position: fixed;
     top: 0;
@@ -198,6 +205,7 @@ input, textarea{
     width: 100vw;
     transition: 0.3s display ease-in;
 }
+
 .dialog{
     &_container{
         background-color: #fff;

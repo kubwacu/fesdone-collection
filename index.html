@@ -12,6 +12,8 @@
     <link rel="icon" href="src/images/logo.png">
     <script src="lib/vue.js"></script>
     <script src="src/js/akana.js"></script>
+    <script src="src/js/constants.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script>
         const tkn = AkanaCookie.get('tkn');
         if(tkn != null) window.location.replace("/messages.html"); 
@@ -68,19 +70,16 @@
                     let modal = document.querySelector(".modal__container");
                     modal.style.display = "block";
 
-                    let form = new FormData();
-                    form.append('username', this.username);
-                    form.append('password', this.password);
+                    let form = {username: this.username, password: this.password};
                     
-                    let q = new AkanaClient({method: 'post', resource: '/login/', data: form})
-                    .run().then(function(result){
+                    axios.post(base_url + "/login/", form).then(response => {
                         modal.style.display = "none";
-
-                        if(result.status == 400){
-                            app.show_error_message(result.content['message']);
+                        
+                        if(response.status == 400){
+                            app.show_error_message(response.data['message']);
                         }
-                        else if(result.status == 202){
-                            AkanaCookie.set("tkn", result.content['token'])
+                        else if(response.status == 202){
+                            AkanaCookie.set("tkn", response.data['message']);
                             window.location.replace("/messages.html"); 
                         }
                     });

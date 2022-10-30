@@ -12,7 +12,9 @@
     <link rel="icon" href="src/images/logo.png">
     <script src="lib/vue.js"></script>
     <script src="src/js/akana.js"></script>
+    <script src="src/js/constants.js"></script>
     <script src="src/js/check_user.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <title>Products - Fesdone collection</title>
 </head>
 <body>
@@ -36,7 +38,7 @@
                         </tr>
                    <tbody>
                         <tr v-for="product in products"> 
-                            <td><div class="image"><img v-bind:src="product.image"></div></td>
+                            <td><div class="image"><img v-bind:src="data_folder + product.image"></div></td>
                             <td><a v-bind:href="'product.html?id=' + product.id">{{ product.name }}</a></td>
                             <td>{{ product.price }} Fbu</td>
                             <td class="action">
@@ -68,24 +70,19 @@
             data: {
                 show_overlay: false,
                 memo_id: null,
-                products: []
+                products: [],
+                data_folder: data_folder
             },
             methods: {
                 delete_product(){
-                    let q = new AkanaClient({
-                    method: 'DELETE',
-                    resource: '/product/' + this.memo_id + '/',
-                    headers: new Map([
-                        ["Authorization", "Token " + AkanaCookie.get('tkn')]
-                    ])
-                }).run().then(function(result){
-                    if(result.status == 200){
+                    axios.delete(base_url + "/products/" + this.memo_id + "/").then(response => {
+                        if(response.status == 200){
                             window.location.replace('/products.html');
                         }
                         else{
                             alert("Product not deleted");
                         }
-                }); 
+                    })
                 },
                 pre_delete_product(id){
                     this.memo_id = id;
@@ -93,14 +90,9 @@
                 }
             },
             created(){
-                let q = new AkanaClient({
-                    method: 'get',
-                    resource: '/product/',
-                    headers: new Map([
-                        ["Authorization", "Token " + AkanaCookie.get('tkn')]
-                    ])
-                }).run().then(function(result){
-                    app.products = result.content;
+                axios.get(base_url + "/products/").then(response => {
+                    app.products = response.data;
+                    console.log(response)
                 });
             }
         })
