@@ -32,14 +32,16 @@
                     <table>
                         <tr class="header">
                             <th></th>
-                            <th>Name</th>
-                            <th>Price</th>
+                            <th>Nom</th>
+                            <th>Type</th>
+                            <th>Prix</th>
                             <th>Actions</th>
                         </tr>
                    <tbody>
                         <tr v-for="product in products"> 
                             <td><div class="image"><img v-bind:src="data_folder + product.image"></div></td>
                             <td><a v-bind:href="'product.html?id=' + product.id">{{ product.name }}</a></td>
+                            <td>{{ product.type }}</td>
                             <td>{{ product.price }} Fbu</td>
                             <td class="action">
                                 <a v-bind:href="'product_modifier.html?id=' + product.id" class="action--edit" title="Edit product"><i class="fas fa-edit"></i></a>
