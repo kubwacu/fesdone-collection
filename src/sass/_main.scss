@@ -1,244 +1,244 @@
-@import 'constants';
-@import 'layouts/header';
+@import "constants";
+@import "layouts/header";
 
-body{
-    background-color: $gray_color;
+body {
+  background-color: $gray_color;
 }
-*{
-    margin:0;
-    padding:0;
-    box-sizing: border-box;
-    font-family: 'Open Sans', 'Arial', sans-serif;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Open Sans", "Arial", sans-serif;
 }
-a{
-    text-decoration: none;
-    transition: 0.3s all;
+a {
+  text-decoration: none;
+  transition: 0.3s all;
 }
-li{
-    list-style: none;
+li {
+  list-style: none;
 }
-img{
-    width: 100%;
-    height: 100%;
+img {
+  width: 100%;
+  height: 100%;
 }
-table{
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 14px;
-    text-align: center;
-    font-family: 'Open Sans';
-    
-    th{
-        color: #fff;
-        padding: 5px 0px;
-    }
-    a{
-        color: $main_color;
-        border-bottom: 1px solid;
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+  text-align: center;
+  font-family: "Open Sans";
 
-        &:hover{
-            color: $second_color
-        }
-    }
-    .image{
-        background-color: $black_color;
-        width: 80px;
-        height: 80px;
-        border-radius: 50%;
-        margin: 10px auto;
-        overflow: hidden;
-    }
-}
-tbody{
-    tr{
-        border-bottom: 1px solid #ccc;
-    }
-}
-
-main{
-    margin-bottom: 200px;
-    
-    >.header{
-        text-align: center;
-        font-weight: lighter;
-        font-size: 18px;
-        color: $black_color;
-
-        h1 {
-            font-size: 32px;
-            font-weight: 500;
-        }
-    }
-
-    .content{
-        background-color: #fff;
-        box-shadow: 5px 5px 5px #ccc;
-        margin: 0px $page_margin;
-
-        .header{
-            background-color: $black_color;
-        }
-    }
-}
-
-.button_section{
-    padding: 20px $page_margin;
-    text-align: right;
-
-    .button{
-        background-color: $main_color;
-        color: #fff;
-        transition: 0.3s all;
-        padding: 10px 20px;
-        border-radius: 5px;
-        border: 1px solid $main_color;
-        font-size: 14px;
-        cursor: pointer;
-
-        &:hover{
-            background-color: #fff;
-            color: $main_color;
-        }
-        &--delete{
-            background-color: #d50000;
-            border-color: #d50000;
-
-            &:hover{
-                color: #d50000;
-            }
-        }
-    }
-    
-}
-
-.badget{
-    background-color: #d50000;
+  th {
     color: #fff;
-    padding: 3px 10px;
-    border-radius: 20px;
+    padding: 5px 0px;
+  }
+  a {
+    color: $main_color;
+    border-bottom: 1px solid;
 
-    &__done{
-        background-color: green;
+    &:hover {
+      color: $second_color;
     }
-
-    &__inprocess{
-        background-color: #1565c0;
-    }
+  }
+  .image {
+    background-color: $black_color;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    margin: 10px auto;
+    overflow: hidden;
+  }
+}
+tbody {
+  tr {
+    border-bottom: 1px solid #ccc;
+  }
 }
 
-.modal{
-    &__container{
-        position: fixed;
-        top: 0;
-        height: 100vh;
-        width: 100vw;
-        z-index: 1000;
-        display: none;
-    }
-    &__overlay{
-        width: 100%;
-        height: 100%;
-        position: absolute;
-        background-color: rgba(0,0,0,.5);
-    }
-    &__content{
-        width: 280px;
-        height: 180px;
-        background-color: #fff;
-        margin: 15% auto;
-        border-radius: 5px;
-        padding:  20px;
-        box-shadow: 1px 1px 10px #ccc;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        transition: 0.3s all ease-in-out;
+main {
+  margin-bottom: 200px;
 
-        ul{
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 50px;
-        }
-        li{
-            height: 10px;
-            width: 10px;
-            background-color: $main_color;
-            margin: 2px;
-            border-radius: 50%;
-        }
-        
-        .dot{
-            &__1{
-                animation: 0.7s dance infinite ease-in-out;
-            }
-            &__2{
-                animation: 0.6s dance infinite ease-in-out;
-                background-color: $second_color;
-            }
-            &__3{
-                animation: 0.5s dance infinite ease-in-out;
-                background-color: green;
-            }
-        }
+  > .header {
+    text-align: center;
+    font-weight: lighter;
+    font-size: 18px;
+    color: $black_color;
 
-        @keyframes dance {
-            50%{
-                margin-bottom: 30px;
-            }
-        }
-
+    h1 {
+      font-size: 32px;
+      font-weight: 500;
     }
+  }
+
+  .content {
+    background-color: #fff;
+    border: 2px solid #ccc;
+    margin: 0px $page_margin;
+		border-radius: 5px;
+
+    .header {
+      background-color: $black_color;
+    }
+  }
 }
 
-input, textarea{
+.button_section {
+  padding: 20px $page_margin;
+  text-align: right;
+
+  .button {
+    background-color: $main_color;
+    color: #fff;
+    transition: 0.3s all;
+    padding: 10px 20px;
     border-radius: 5px;
+    border: 1px solid $main_color;
+    font-size: 14px;
+    cursor: pointer;
+
+    &:hover {
+      background-color: #fff;
+      color: $main_color;
+    }
+    &--delete {
+      background-color: #d50000;
+      border-color: #d50000;
+
+      &:hover {
+        color: #d50000;
+      }
+    }
+  }
 }
 
-.overlay{
+.badget {
+  background-color: #d50000;
+  color: #fff;
+  padding: 3px 10px;
+  border-radius: 20px;
+
+  &__done {
+    background-color: green;
+  }
+
+  &__inprocess {
+    background-color: #1565c0;
+  }
+}
+
+.modal {
+  &__container {
     position: fixed;
     top: 0;
-    bottom: 0;
-    background-color: rgba($color: #000000, $alpha: 0.7);
     height: 100vh;
     width: 100vw;
-    transition: 0.3s display ease-in;
+    z-index: 1000;
+    display: none;
+  }
+  &__overlay {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+  &__content {
+    width: 280px;
+    height: 180px;
+    background-color: #fff;
+    margin: 15% auto;
+    border-radius: 5px;
+    padding: 20px;
+    box-shadow: 1px 1px 10px #ccc;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: 0.3s all ease-in-out;
+
+    ul {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 50px;
+    }
+    li {
+      height: 10px;
+      width: 10px;
+      background-color: $main_color;
+      margin: 2px;
+      border-radius: 50%;
+    }
+
+    .dot {
+      &__1 {
+        animation: 0.7s dance infinite ease-in-out;
+      }
+      &__2 {
+        animation: 0.6s dance infinite ease-in-out;
+        background-color: $second_color;
+      }
+      &__3 {
+        animation: 0.5s dance infinite ease-in-out;
+        background-color: green;
+      }
+    }
+
+    @keyframes dance {
+      50% {
+        margin-bottom: 30px;
+      }
+    }
+  }
 }
 
-.dialog{
-    &_container{
-        background-color: #fff;
-        height: 150px;
-        width: 400px;
-        margin: 20% auto;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
+input,
+textarea {
+  border-radius: 5px;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  background-color: rgba($color: #000000, $alpha: 0.7);
+  height: 100vh;
+  width: 100vw;
+  transition: 0.3s display ease-in;
+}
+
+.dialog {
+  &_container {
+    background-color: #fff;
+    height: 150px;
+    width: 400px;
+    margin: 20% auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+
+    ul {
+      display: flex;
+      justify-content: center;
+
+      li {
+        width: 100px;
+        margin: 20px;
+        height: 45px;
+        line-height: 40px;
         border-radius: 5px;
+        text-align: center;
+        cursor: pointer;
+        color: #fff;
 
-        ul{
-            display: flex;
-            justify-content: center;
-
-            li{
-                width: 100px;
-                margin: 20px;
-                height: 45px;
-                line-height: 40px;
-                border-radius: 5px;
-                text-align: center;
-                cursor: pointer;
-                color: #fff;
-
-                &.yes{
-                    background-color: $main_color;
-                }
-                &.no{
-                    background-color: #d50000;
-                }
-            }
+        &.yes {
+          background-color: $main_color;
         }
+        &.no {
+          background-color: #d50000;
+        }
+      }
     }
+  }
 }

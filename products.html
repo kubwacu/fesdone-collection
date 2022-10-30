@@ -1,103 +1,112 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="src/css/products.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;1,300;1,400;1,600;1,700;1,800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="temp/libraries/css/all.min.css">
-    <link rel="icon" href="src/images/logo.png">
-    <script src="lib/vue.js"></script>
-    <script src="src/js/akana.js"></script>
-    <script src="src/js/constants.js"></script>
-    <script src="src/js/check_user.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <title>Products - Fesdone collection</title>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="src/css/products.css">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link
+		href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;1,300;1,400;1,600;1,700;1,800&display=swap"
+		rel="stylesheet">
+	<link rel="stylesheet" href="temp/libraries/css/all.min.css">
+	<link rel="icon" href="src/images/logo.png">
+	<script src="lib/vue.js"></script>
+	<script src="src/js/akana.js"></script>
+	<script src="src/js/constants.js"></script>
+	<script src="src/js/check_user.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+	<title>Products - Fesdone collection</title>
 </head>
+
 <body>
-    <div id="app">
-        <c-header></c-header>
+	<div id="app">
+		<c-header></c-header>
 
-        <main>
-            <div class="header">
-                <h1>Products</h1>
-            </div>
-            <div class="button_section">
-                <a href="product_modifier.html" class="button">Add new product</a>
-            </div>
-                <div class="content">
-                    <table>
-                        <tr class="header">
-                            <th></th>
-                            <th>Nom</th>
-                            <th>Type</th>
-                            <th>Prix</th>
-                            <th>Actions</th>
-                        </tr>
-                   <tbody>
-                        <tr v-for="product in products"> 
-                            <td><div class="image"><img v-bind:src="data_folder + product.image"></div></td>
-                            <td><a v-bind:href="'product.html?id=' + product.id">{{ product.name }}</a></td>
-                            <td>{{ product.type }}</td>
-                            <td>{{ product.price }} Fbu</td>
-                            <td class="action">
-                                <a v-bind:href="'product_modifier.html?id=' + product.id" class="action--edit" title="Edit product"><i class="fas fa-edit"></i></a>
-                                <span class="action--delete"  @click="pre_delete_product(product.id)" title="Delete product"><i class="fas fa-trash-alt"></i></span>
-                           </td>
-                        </tr>
-                   </tbody>     
-                    </table>
-                </div>
-        </main>
-        <div class="overlay" v-show="show_overlay">
-            <div class="dialog_container">
-                <p>Vous etes sur de vouloir supprimer cet element?</p>
-                <ul>
-                    <li class="no" @click="show_overlay = false">No</li>
-                    <li class="yes" @click="delete_product">Yes</li>
-                </ul>
-            </div>
-        </div>
+		<main>
+			<div class="header">
+				<h1>Products</h1>
+			</div>
+			<div class="button_section">
+				<a href="product_modifier.html" class="button">Add new product</a>
+			</div>
+			<div class="content">
+				<table>
+					<tr class="header">
+						<th></th>
+						<th>Nom</th>
+						<th>Type</th>
+						<th>Prix</th>
+						<th>Actions</th>
+					</tr>
+					<tbody>
+						<tr v-for="product in products">
+							<td>
+								<div class="image"><img v-bind:src="data_folder + product.image"></div>
+							</td>
+							<td><a v-bind:href="'product.html?id=' + product.id">{{ product.name }}</a></td>
+							<td>{{ product.type }}</td>
+							<td>{{ product.price }} Fbu</td>
+							<td class="action">
+								<a v-bind:href="'product_modifier.html?id=' + product.id" class="action--edit" title="Edit product"><i
+										class="fas fa-edit"></i></a>
+								<span class="action--delete" @click="pre_delete_product(product.id)" title="Delete product"><i
+										class="fas fa-trash-alt"></i></span>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</main>
+		<div class="overlay" v-show="show_overlay">
+			<div class="dialog_container">
+				<p>Vous etes sur de vouloir supprimer cet element?</p>
+				<ul>
+					<li class="no" @click="show_overlay = false">No</li>
+					<li class="yes" @click="delete_product">Yes</li>
+				</ul>
+			</div>
+		</div>
 
 
-    </div>
+	</div>
 
-    <script src="src/components/header.js"></script>
-    <script>
-        const app = new Vue({
-            el: '#app',
-            data: {
-                show_overlay: false,
-                memo_id: null,
-                products: [],
-                data_folder: data_folder
-            },
-            methods: {
-                delete_product(){
-                    axios.delete(base_url + "/products/" + this.memo_id + "/").then(response => {
-                        if(response.status == 200){
-                            window.location.replace('/products.html');
-                        }
-                        else{
-                            alert("Product not deleted");
-                        }
-                    })
-                },
-                pre_delete_product(id){
-                    this.memo_id = id;
-                    this.show_overlay = true;
-                }
-            },
-            created(){
-                axios.get(base_url + "/products/").then(response => {
-                    app.products = response.data;
-                    console.log(response)
-                });
-            }
-        })
-    </script>
+	<script src="src/components/header.js"></script>
+	<script>
+		const app = new Vue({
+			el: '#app',
+			data: {
+				show_overlay: false,
+				memo_id: null,
+				products: [],
+				data_folder: data_folder
+			},
+			methods: {
+				delete_product() {
+					axios.delete(base_url + "/products/" + this.memo_id + "/").then(response => {
+						if (response.status == 200) {
+							window.location.replace('/products.html');
+						}
+						else {
+							alert("Product not deleted");
+						}
+					})
+				},
+				pre_delete_product(id) {
+					this.memo_id = id;
+					this.show_overlay = true;
+				}
+			},
+			created() {
+				axios.get(base_url + "/products/").then(response => {
+					app.products = response.data;
+					console.log(response)
+				});
+			}
+		})
+	</script>
 </body>
+
 </html>
