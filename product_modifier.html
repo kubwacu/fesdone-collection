@@ -140,7 +140,7 @@
 
 					// to edit
 					if (this.id !== null) {
-						axios.put(base_url + "/products/" + this.id + "/", form).then(response => {
+						axios.patch(base_url + "/products/" + this.id + "/", form).then(response => {
 							AkanaCookie.delete("uploading_image");
 							if (response.status == 202) {
 								window.location.replace('/products.html');
